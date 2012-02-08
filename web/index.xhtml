@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:body>
+        <ui:composition template="./indexTemplate.xhtml">
+
+            <ui:define name="content">
+
+                <h:form>
+
+                    <h:panelGrid columns="2" style="vertical-align:top;" >
+                        <img src="./resources/images/etoile-logo-small-student.png" width="450"/>
+                        <h:panelGrid columns="2" >
+                            <h:outputLabel value="Username: "/>
+                            <p:inputText id="username" size="25" required="true" value="#{userM.loginname}"/>
+
+                            <h:outputLabel value="Pasword: "/>
+                            <p:password value="#{userM.password}"  size="25" minLength="6" id="password" feedback="false" required="true"/>
+                            <p:column />
+                            <h:panelGrid columns="3" >
+                                <p:commandButton onclick="dlgHelp.show();" image="ui-icon ui-icon-help"/>
+                                <p:commandButton value="Register" onclick="dlgRegister.show();"/>
+                                <p:commandButton value="Login" ajax="false"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:form>
+                <p:dialog id="helpDialog" header="How to Login" widgetVar="dlgHelp" resizable="false" position="center">  
+                    <h:form>
+                        <p:outputPanel layout="block" style="width:350px;height:100px;border:1px solid grey;">
+
+
+                            <h:outputText value="   Insert your username and password and press login." />
+                            <p></p>
+                            <h:outputText value="   To register a new account, press register and fill the form." />
+                            <p></p>
+                            <h:outputText value="   If you have difficulties press here LINK." />
+
+                        </p:outputPanel>
+                        <center> 
+                            <p:commandButton value="Ok" onclick="dlgHelp.hide();"/>
+                        </center>
+
+                    </h:form>  
+                </p:dialog>  
+
+                <p:dialog id="registerDialog" header="Register" widgetVar="dlgRegister" resizable="false" dynamic="true" draggable="false" minWidth="400" minHeight="250" position="center">  
+                    <h:form>
+                        <h:outputText value="Please fill in the next form:"/>
+                        <p:outputPanel layout="block" style="width:400px;border:1px solid grey;">
+                            <h:panelGrid columns="2" >
+                                <h:outputLabel value="First Name:"/>
+                                <p:inputText id="reg_firstname" required="true"  value=""/>
+                                <h:outputLabel value="Last Name:"/>
+                                <p:inputText id="reg_lastname" required="true"  value=""/>
+                            </h:panelGrid>
+                            <br></br>
+                            <h:panelGrid columns="2" >
+                                <h:outputLabel value="Username:" />
+                                <p:inputText id="reg_username"  required="true" value=""/>
+                                <h:outputLabel value="Email:" />
+                                <p:inputText id="reg_email" required="true" value=""/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" id="matchGrid" >
+                                <h:outputLabel value="Pasword:"/>
+                                <p:password id="reg_pwd1" value=""  match="pwd2"  minLength="6" feedback="true" required="true"  inline="true"/>
+                                <h:outputLabel value="Retype Password:"/>
+                                <p:password id="reg_pwd2" value=""   minLength="6" feedback="false" required="true" />
+                            </h:panelGrid>
+
+
+
+
+                        </p:outputPanel>
+                        <center> 
+                            <p:commandButton value="Submit" onclick="dlgRegister.hide();" update="matchGrid"/>
+                        </center>
+
+                    </h:form>  
+                </p:dialog>  
+
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
