@@ -16,15 +16,15 @@
                         <img src="./resources/images/etoile-logo-small-student.png" width="450"/>
                         <h:panelGrid columns="2" >
                             <h:outputLabel value="Username: "/>
-                            <p:inputText id="username" size="25" required="true" value="#{userM.loginname}"/>
+                            <p:inputText id="username" size="25" required="true" value="#{userManager.username}"/>
 
                             <h:outputLabel value="Pasword: "/>
-                            <p:password value="#{userM.password}"  size="25" minLength="6" id="password" feedback="false" required="true"/>
+                            <p:password value="#{userManager.password}"  size="25" minLength="6" id="password" feedback="false" required="true"/>
                             <p:column />
                             <h:panelGrid columns="3" >
                                 <p:commandButton onclick="dlgHelp.show();" image="ui-icon ui-icon-help"/>
                                 <p:commandButton value="Register" onclick="dlgRegister.show();"/>
-                                <p:commandButton value="Login" ajax="false"/>
+                                <p:commandButton value="Login" ajax="false" action="#{userManager.CheckValidUser}"/>
                             </h:panelGrid>
                         </h:panelGrid>
                     </h:panelGrid>
