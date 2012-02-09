@@ -4,23 +4,21 @@
  */
 package user;
 
-import db.DBConnect;
-import db.SQLInstruct;
+import etoile.javaapi.ServiceManager;
 import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.faces.application.FacesMessage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
 @SessionScoped
 public class userManager {
 
-    @ManagedProperty(value="#{sha1}")
+    @ManagedProperty(value = "#{sha1}")
     private sha1 sha1;
     private String username;
     private String password;
@@ -51,38 +49,20 @@ public class userManager {
     }
 
     public String CheckValidUser() {
-        
         try {
-            System.out.println(sha1.parseSHA1Password(password));
-            DBConnect db = new DBConnect(SQLInstruct.dbAdress, SQLInstruct.dbUsername, SQLInstruct.dbPassword);
-            db.loadDriver();
-            String sqlStatement = SQLInstruct.login(username, sha1.parseSHA1Password(password));
-            ResultSet rSet = db.queryDB(sqlStatement);
-
-
-            if (rSet.next()) {
-                user_id = rSet.getInt(1);
-
-
-                System.out.println("User: " + username + " has logged On.");
-
-                return "success";
-            }
-
-        } catch (NoSuchAlgorithmException ex) {
-            System.out.println("NoSuchAlgorithmException");
+            ServiceManager manager = new ServiceManager();
+            return manager.setAuthentication(username, sha1.parseSHA1Password(password));
         } catch (InstantiationException ex) {
-            System.out.println("InstantiationException");
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            System.out.println("IllegalAccessException");
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            System.out.println("ClassNotFoundException");
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-
-            System.out.println(ex.getMessage());
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Wrong User or Password"));
         return "fail";
-
     }
 }
