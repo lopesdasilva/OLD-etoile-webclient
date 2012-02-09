@@ -11,12 +11,12 @@
  <navigation-rule>
      <from-view-id>index.xhtml</from-view-id>
      <navigation-case>
-            <from-action>#{userManager.CheckValidUser}</from-action>
+            <from-action>#{userManager.checkValidUser}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>profile.xhtml</to-view-id>           
         </navigation-case>
         <navigation-case>
-            <from-action>#{userManager.CheckValidUser}</from-action>
+            <from-action>#{userManager.checkValidUser}</from-action>
             <from-outcome>fail</from-outcome>
             <to-view-id>index.xhtml</to-view-id>
         </navigation-case>

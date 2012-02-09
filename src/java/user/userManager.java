@@ -9,9 +9,11 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
@@ -48,10 +50,18 @@ public class userManager {
         this.username = username;
     }
 
-    public String CheckValidUser() {
+    public String checkValidUser() {
         try {
             ServiceManager manager = new ServiceManager();
-            return manager.setAuthentication(username, sha1.parseSHA1Password(password));
+            boolean a=manager.setAuthentication(username, sha1.parseSHA1Password(password));
+            System.out.println("--------------------------------------"+manager.setAuthentication(username, sha1.parseSHA1Password(password)));
+            
+            if (manager.setAuthentication(username, sha1.parseSHA1Password(password))) {
+                return "success";
+            }
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -60,9 +70,10 @@ public class userManager {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Wrong User or Password"));
+
         return "fail";
+
     }
 }

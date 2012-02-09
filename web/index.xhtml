@@ -11,24 +11,27 @@
             <ui:define name="content">
 
                 <h:form>
+                    <p:column>
 
-                    <h:panelGrid columns="2" style="vertical-align:top;" >
-                        <img src="./resources/images/etoile-logo-small-student.png" width="450"/>
-                        <h:panelGrid columns="2" >
-                            <h:outputLabel value="Username: "/>
-                            <p:inputText id="username" size="25" required="true" value="#{userManager.username}"/>
+                        <h:panelGrid columns="2" id="login" style="vertical-align:top;" >
+                            <img src="./resources/images/etoile-logo-small-student.png" width="450"/>
+                            <h:panelGrid columns="2" >
+                                <h:outputLabel value="Username: "/>
+                                <p:inputText id="username" size="25" label="username"  value="#{userManager.username}"/>
+                                <h:outputLabel value="Pasword: "/>
+                                <p:password value="#{userManager.password}" label="password"  size="25" minLength="6" id="password" feedback="false" />
+                                <br></br>
+                                <h:panelGrid columns="3" >
+                                    <p:commandButton  value="Login" ajax="false" action="#{userManager.checkValidUser}"/>
+                                    <p:commandButton value="Register" onclick="dlgRegister.show();"/>
+                                    <p:commandButton onclick="dlgHelp.show();" image="ui-icon ui-icon-help"/>
 
-                            <h:outputLabel value="Pasword: "/>
-                            <p:password value="#{userManager.password}"  size="25" minLength="6" id="password" feedback="false" required="true"/>
-                            <p:column />
-                            <h:panelGrid columns="3" >
-                                <p:commandButton onclick="dlgHelp.show();" image="ui-icon ui-icon-help"/>
-                                <p:commandButton value="Register" onclick="dlgRegister.show();"/>
-                                <p:commandButton value="Login" ajax="false" action="#{userManager.CheckValidUser}"/>
+                                </h:panelGrid>
                             </h:panelGrid>
                         </h:panelGrid>
-                    </h:panelGrid>
-                    <p:messages showDetail="true" autoUpdate="true"/> 
+                    </p:column>
+                    <p:growl id="growl"  showDetail="true" autoUpdate="true"/>  
+
                 </h:form>
                 <p:dialog id="helpDialog" header="How to Login" widgetVar="dlgHelp" resizable="false" position="center">  
                     <h:form>
@@ -54,31 +57,28 @@
                         <h:outputText value="Please fill in the next form:"/>
                         <p:outputPanel layout="block" style="width:400px;border:1px solid grey;">
                             <h:panelGrid columns="2" >
-                                <h:outputLabel value="First Name:"/>
-                                <p:inputText id="reg_firstname" required="true"  value=""/>
-                                <h:outputLabel value="Last Name:"/>
-                                <p:inputText id="reg_lastname" required="true"  value=""/>
+                                <h:outputLabel value="First Name: *"/>
+                                <p:inputText id="reg_firstname" value="#{userRegister.firstName}" required="true"  label="First name" requiredMessage="First name required." />
+                                <h:outputLabel value="Last Name: *"/>
+                                <p:inputText id="reg_lastname" value="#{userRegister.lastName}" required="true"  label="Last name" requiredMessage="Last name required." />
                             </h:panelGrid>
                             <br></br>
                             <h:panelGrid columns="2" >
-                                <h:outputLabel value="Username:" />
-                                <p:inputText id="reg_username"  required="true" value=""/>
-                                <h:outputLabel value="Email:" />
-                                <p:inputText id="reg_email" required="true" value=""/>
+                                <h:outputLabel value="Username: *" />
+                                <p:inputText id="reg_username"  value="#{userRegister.username}" required="true" label="Username" requiredMessage="Username required." />
+                                <h:outputLabel value="Email: *" />
+                                <p:inputText id="reg_email" value="#{userRegister.email}" required="true" label="Email" requiredMessage="Email required."/>
                             </h:panelGrid>
                             <h:panelGrid columns="2" id="matchGrid" >
-                                <h:outputLabel value="Pasword:"/>
-                                <p:password id="reg_pwd1" value=""  match="pwd2"  minLength="6" feedback="true" required="true"  inline="true"/>
-                                <h:outputLabel value="Retype Password:"/>
-                                <p:password id="reg_pwd2" value=""   minLength="6" feedback="false" required="true" />
+                                <h:outputLabel for="reg_pwd1" value="Password: *" /> 
+                                <p:password id="reg_pwd1" value="#{userRegister.password}"  label="Password1" match="reg_pwd2"  minLength="6" feedback="true" required="true"  inline="true" requiredMessage="Password Required." />
+
+                                <h:outputLabel for="reg_pwd2" value="Retype password: *" /> 
+                                <p:password id="reg_pwd2" value="#{userRegister.password}"   label="Password2" minLength="6" feedback="false"/>
                             </h:panelGrid>
-
-
-
-
                         </p:outputPanel>
                         <center> 
-                            <p:commandButton value="Submit" onclick="dlgRegister.hide();" update="matchGrid"/>
+                            <p:commandButton value="Submit" update="matchGrid" action="#{userRegister.createUser}"/>
                         </center>
 
                     </h:form>  
