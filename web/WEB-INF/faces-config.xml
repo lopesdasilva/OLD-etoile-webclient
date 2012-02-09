@@ -20,5 +20,16 @@
             <from-outcome>fail</from-outcome>
             <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-action>#{userRegister.createUser}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userRegister.createUser}</from-action>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>
+        </navigation-case>
+        
  </navigation-rule>
 </faces-config>

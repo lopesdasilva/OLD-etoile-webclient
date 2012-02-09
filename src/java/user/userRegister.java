@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import sha1.sha1;
 
 @ManagedBean(name = "userRegister")
@@ -78,6 +79,7 @@ public class userRegister {
     }
 
     public String createUser() {
+        RequestContext context = RequestContext.getCurrentInstance();
         try {
             System.out.println("-----------CREATING USER!----------");
             System.out.println("Username:" + username);
@@ -85,12 +87,15 @@ public class userRegister {
             System.out.println("FirstName:" + firstName);
             System.out.println("LastName:" + lastName);
             System.out.println("Email:" + email);
-
-            Student student = new Student("teste", "40bd001563085fc35165329ea1ff5c5ecbdbbeef", "Ruben", "Paixao", "r@r.r");
-            System.out.println(student.username);
+            
+            Student student = new Student(username, sha1.parseSHA1Password(password), firstName, lastName, email);
             ServiceManager manager = new ServiceManager();
 
             manager.userService().addStudent(student);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "User created successfully."));
+                
+            context.addCallbackParam("registerDialog", false);  
+            return "success";
 
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,9 +108,8 @@ public class userRegister {
         } catch (SQLException ex) {
             Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Unknown Error"));
-
+        context.addCallbackParam("registerDialog", true);  
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "User creation failed."));
         return "fail";
 
     }

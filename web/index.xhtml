@@ -78,12 +78,20 @@
                             </h:panelGrid>
                         </p:outputPanel>
                         <center> 
-                            <p:commandButton value="Submit" update="matchGrid" action="#{userRegister.createUser}"/>
+                            <p:commandButton value="Submit"  oncomplete="handleLoginRequest(xhr, status, args)" update="matchGrid" action="#{userRegister.createUser}"/>
                         </center>
 
                     </h:form>  
                 </p:dialog>  
-
+                <script type="text/javascript">  
+                    function handleLoginRequest(xhr, status, args) {  
+                        if(!status) {  
+                            jQuery('#registerDialog').effect("shake", { times:3 }, 100);  
+                        } else {  
+                            dlgRegister.hide();  
+                        }  
+                    }  
+                </script>
 
             </ui:define>
 
