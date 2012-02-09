@@ -94,7 +94,7 @@ public class userRegister {
             manager.userService().addStudent(student);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "User created successfully."));
                 
-            context.addCallbackParam("registerDialog", false);  
+            context.addCallbackParam("registerDialog", true);  
             return "success";
 
         } catch (NoSuchAlgorithmException ex) {
@@ -108,7 +108,7 @@ public class userRegister {
         } catch (SQLException ex) {
             Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
-        context.addCallbackParam("registerDialog", true);  
+        context.addCallbackParam("registerDialog", false);  
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "User creation failed."));
         return "fail";
 

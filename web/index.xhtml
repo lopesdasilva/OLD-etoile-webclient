@@ -85,7 +85,7 @@
                 </p:dialog>  
                 <script type="text/javascript">  
                     function handleLoginRequest(xhr, status, args) {  
-                        if(!status) {  
+                        if(!args.registerDialog) {  
                             jQuery('#registerDialog').effect("shake", { times:3 }, 100);  
                         } else {  
                             dlgRegister.hide();  

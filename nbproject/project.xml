@@ -18,18 +18,15 @@
                     <file>${libs.primefaces.classpath}</file>
                 </library>
                 <library dirs="200">
-                    <file>${libs.PrimeFaces.classpath}</file>
-                </library>
-                <library dirs="200">
-                    <file>${libs.PrimeFaces.classpath}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${libs.MySQLDriver.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${reference.etoile-javaapi.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.primefaces-3.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
