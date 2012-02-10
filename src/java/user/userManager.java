@@ -4,7 +4,9 @@
  */
 package user;
 
+
 import etoile.javaapi.ServiceManager;
+import etoile.javaapi.Student;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -14,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import menu.MenuBean;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
@@ -24,7 +27,21 @@ public class userManager {
     private sha1 sha1;
     private String username;
     private String password;
-    int user_id;
+    private Student current_user;
+    private MenuBean menu;
+
+    public MenuBean getMenu() {
+        return menu;
+    }
+
+    public Student getCurrent_user() {
+        return current_user;
+    }
+
+    public void setCurrent_user(Student current_user) {
+        this.current_user = current_user;
+    }
+
 
     public void setSha1(sha1 sha1) {
         this.sha1 = sha1;
@@ -53,10 +70,24 @@ public class userManager {
     public String checkValidUser() {
         try {
             ServiceManager manager = new ServiceManager();
-            boolean a=manager.setAuthentication(username, sha1.parseSHA1Password(password));
-            System.out.println("--------------------------------------"+manager.setAuthentication(username, sha1.parseSHA1Password(password)));
             
             if (manager.setAuthentication(username, sha1.parseSHA1Password(password))) {
+                current_user = manager.getCurrent_student();
+                
+                //TODO:REMOVE
+                System.out.println("***************Name:"+current_user.firstname);
+                
+                manager.userService().updateCourses(current_user.getId());
+                
+                
+                //TODO:REMOVE
+                System.out.println("***************Name:"+current_user.courses.getFirst().getName());
+                
+               
+                
+                //TODO replace arg with List
+                
+                menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
                 return "success";
             }
 
