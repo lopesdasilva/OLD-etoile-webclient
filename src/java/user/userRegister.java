@@ -22,7 +22,7 @@ import sha1.sha1;
 @SessionScoped
 public class userRegister {
 
-     @ManagedProperty(value = "#{sha1}")
+    @ManagedProperty(value = "#{sha1}")
     private sha1 sha1;
     private String username;
     private String password;
@@ -79,22 +79,29 @@ public class userRegister {
     }
 
     public String createUser() {
+
+        if (!email.contains("@") && !email.contains(".")) { 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Email"));
+       
+            return "fail";
+        }
         RequestContext context = RequestContext.getCurrentInstance();
         try {
-            System.out.println("-----------CREATING USER!----------");
-            System.out.println("Username:" + username);
-            System.out.println("Password:" + sha1.parseSHA1Password(password));
-            System.out.println("FirstName:" + firstName);
-            System.out.println("LastName:" + lastName);
-            System.out.println("Email:" + email);
-            
+            //TODO: REMOVE THIS
+//            System.out.println("-----------CREATING USER!----------");
+//            System.out.println("Username:" + username);
+//            System.out.println("Password:" + sha1.parseSHA1Password(password));
+//            System.out.println("FirstName:" + firstName);
+//            System.out.println("LastName:" + lastName);
+//            System.out.println("Email:" + email);
+
             Student student = new Student(username, sha1.parseSHA1Password(password), firstName, lastName, email);
             ServiceManager manager = new ServiceManager();
 
             manager.userService().addStudent(student);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "User created successfully."));
-                
-            context.addCallbackParam("registerDialog", true);  
+
+            context.addCallbackParam("registerDialog", true);
             return "success";
 
         } catch (NoSuchAlgorithmException ex) {
@@ -108,7 +115,7 @@ public class userRegister {
         } catch (SQLException ex) {
             Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
-        context.addCallbackParam("registerDialog", false);  
+        context.addCallbackParam("registerDialog", false);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "User creation failed."));
         return "fail";
 
