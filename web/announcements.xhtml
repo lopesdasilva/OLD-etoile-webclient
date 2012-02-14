@@ -5,17 +5,18 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-
     <body>
 
-        <ui:composition template="./resources/templates/profileTemplate.xhtml">
+        <ui:composition template="./resources/templates/disciplineTemplate.xhtml">
 
             <ui:define name="toptop">
                 <h:form>
-                    <h:panelGrid columns="3" styleClass="breadcrums" >
+                    <h:panelGrid columns="5" styleClass="breadcrums" >
                         <p:commandLink value="Profile" ajax="false" action="#{userManager.redirectProfile()}" />
                         <h:outputLabel value=">"/>
-                        <p:commandLink value="Account" disabled="true"  ajax="false" action="#{userManager.redirectAccount()}"/>
+                        <p:commandLink value="#{userManager.selectedDiscipline.name}" disabled="true"/>
+                        <h:outputLabel value=">"/>
+                        <p:commandLink value="Announcements" disabled="true"/>
                     </h:panelGrid>
 
                     <h:panelGrid columns="3" styleClass="userbar">
@@ -26,18 +27,12 @@
                 </h:form>
             </ui:define>
 
-
             <ui:define name="content">
-                <p:fieldset legend="Account">
+                <p:fieldset legend="Announcements">
 
                 </p:fieldset>
             </ui:define>
 
-            <ui:define name="right">
-                <p:fieldset legend="Agenda">
-
-                </p:fieldset>
-            </ui:define>
 
         </ui:composition>
 

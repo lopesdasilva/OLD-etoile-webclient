@@ -5,6 +5,8 @@
 package user;
 
 
+import etoile.javaapi.Discipline;
+import etoile.javaapi.Module;
 import etoile.javaapi.ServiceManager;
 import etoile.javaapi.Student;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +18,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import menu.MenuBean;
+import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.component.submenu.Submenu;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
@@ -30,6 +35,28 @@ public class userManager {
     private Student current_user;
     private MenuBean menu;
     ServiceManager manager;
+    
+    private Discipline selectedDiscipline;
+    private Module selectedModule;
+
+    public Module getSelectedModule() {
+        return selectedModule;
+    }
+
+    public void setSelectedModule(Module selectedModule) {
+        this.selectedModule = selectedModule;
+    }
+    
+    
+    public Discipline getSelectedDiscipline() {
+        return selectedDiscipline;
+    }
+
+    public void setSelectedDiscipline(Discipline selectedDiscipline) {
+        this.selectedDiscipline = selectedDiscipline;
+    }
+    
+    
     public MenuBean getMenu() {
         return menu;
     }
@@ -126,5 +153,31 @@ public class userManager {
     public String redirectProfile(){
         return "success";
     }
+    
+    public String redirectAnnouncements(){
+        return "success";
+    }
+    
+    public void redirectAnnouncements(ActionEvent event){
+        Object obj = event.getSource();
+        MenuItem aux_info = (MenuItem) obj;
+        Submenu aux_discipline = (Submenu) aux_info.getParent();
+        System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
+        selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
+        System.out.println("Selected Discipline: " + selectedDiscipline.getName()+" id"+selectedDiscipline.getId());
+    }
+    
+    public String redirectModule(){
+        return "success";
+        
+    }
+     public void redirectModule(ActionEvent event){
+        Object obj = event.getSource();
+        MenuItem aux_info = (MenuItem) obj;
+        Submenu aux_discipline = (Submenu) aux_info.getParent();
+        System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
+        selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
+        selectedModule=manager.userService().getModule(aux_info.getValue());
+        }
     
 }

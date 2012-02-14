@@ -8,6 +8,11 @@ import etoile.javaapi.Discipline;
 import etoile.javaapi.Module;
 import java.io.Serializable;
 import java.util.LinkedList;
+import javax.el.MethodExpression;
+import javax.faces.application.Application;
+import javax.faces.context.FacesContext;
+import javax.faces.el.MethodBinding;
+import javax.faces.event.ActionEvent;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
@@ -34,12 +39,16 @@ public class MenuBean implements Serializable {
 
             item = new MenuItem();
             item.setValue("Announcements");
-            item.setUrl("#");
+            //item.setId(d.getId()+"");
+            item.setAjax(false);
+            item.setActionExpression(createAction_old("#{userManager.redirectAnnouncements}", String.class));
+            item.setActionListener(createActionListener("#{userManager.redirectAnnouncements}"));
             submenu.getChildren().add(item);
-            MenuItem item2 = new MenuItem();
-            item2.setValue("Contents");
-            item2.setUrl("#");
-            submenu.getChildren().add(item2);
+            
+//            MenuItem item2 = new MenuItem();
+//            item2.setValue("Contents");
+//            item2.setUrl("#");
+//            submenu.getChildren().add(item2);
             MenuItem item3 = new MenuItem();
             item3.setValue("Discussion Forum");
             item3.setUrl("#");
@@ -48,7 +57,9 @@ public class MenuBean implements Serializable {
             for (Module m : d.getModules()) {
                 item = new MenuItem();
                 item.setValue(m.getName());
-                item.setUrl("#");
+                item.setAjax(false);
+                item.setActionExpression(createAction_old("#{userManager.redirectModule}", String.class));
+                item.setActionListener(createActionListener("#{userManager.redirectModule}"));
                 submenu.getChildren().add(item);
             }
             model.addSubmenu(submenu);
@@ -58,4 +69,19 @@ public class MenuBean implements Serializable {
     public MenuModel getModel() {
         return model;
     }
+
+    private MethodExpression createAction_old(String actionExpression, Class<String> aClass) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context.getApplication().getExpressionFactory().createMethodExpression(context.getELContext(), actionExpression, null, new Class[0]);
+    }
+
+    private MethodBinding createActionListener(String actionListenerExpression) {
+         Application app = FacesContext.getCurrentInstance().getApplication();
+
+        return app.createMethodBinding(actionListenerExpression, new Class[]{ActionEvent.class});
+
+    }
+    
+    
+    
 }

@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
     <body>
 
         <ui:composition template="./resources/templates/profileTemplate.xhtml">
@@ -24,9 +25,13 @@
 
             <ui:define name="right">
                 <p:fieldset legend="Agenda">
-                    <h:panelGrid columns="2">
-                        <h:outputLabel value="Profile"/>
-                    </h:panelGrid>
+                    <p:panelGrid columns="2">  
+                        <h:outputLabel id="date" value="Saturday, 28 January 2012" />  
+                        <h:outputLabel id="event" value="Mathematics Test" />  
+                        
+                         <h:outputLabel id="date2" value="Monday, 30 January 2012" />  
+                        <h:outputLabel id="event2" value="English Test" />  
+                    </p:panelGrid>  
                 </p:fieldset>
             </ui:define>
 

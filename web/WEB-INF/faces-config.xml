@@ -8,9 +8,9 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
     
 
- <navigation-rule>
-     <from-view-id>index.xhtml</from-view-id>
-     <navigation-case>
+    <navigation-rule>
+        <from-view-id>index.xhtml</from-view-id>
+        <navigation-case>
             <from-action>#{userManager.checkValidUser}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>profile.xhtml</to-view-id>           
@@ -31,15 +31,15 @@
             <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
      
- </navigation-rule>
- <navigation-rule>
-   
-     <navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>profile.xhtml</from-view-id>
+        <navigation-case>
             <from-action>#{userManager.logOff()}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>index.xhtml</to-view-id>           
         </navigation-case>   
-         <navigation-case>
+        <navigation-case>
             <from-action>#{userManager.redirectAccount()}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>account.xhtml</to-view-id>           
@@ -49,5 +49,101 @@
             <from-outcome>success</from-outcome>
             <to-view-id>profile.xhtml</to-view-id>           
         </navigation-case>
- </navigation-rule>
+        <navigation-case>
+            <from-action>#{userManager.redirectAnnouncements}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>announcements.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectModule}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>module.xhtml</to-view-id>           
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>discipline.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManager.logOff()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>           
+        </navigation-case>   
+        <navigation-case>
+            <from-action>#{userManager.redirectAccount()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>account.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectProfile()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>profile.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectAnnouncements}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>announcements.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectModule}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>module.xhtml</to-view-id>           
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>module.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManager.logOff()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>           
+        </navigation-case>   
+        <navigation-case>
+            <from-action>#{userManager.redirectAccount()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>account.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectProfile()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>profile.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectAnnouncements}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>announcements.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectModule}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>module.xhtml</to-view-id>           
+        </navigation-case>
+    </navigation-rule>
+ 
+    <navigation-rule>
+        <from-view-id>announcements.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManager.logOff()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>           
+        </navigation-case>   
+        <navigation-case>
+            <from-action>#{userManager.redirectAccount()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>account.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectProfile()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>profile.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectAnnouncements}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>announcements.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManager.redirectModule}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>module.xhtml</to-view-id>           
+        </navigation-case>
+    </navigation-rule>
+        
 </faces-config>
