@@ -8,19 +8,63 @@
     <body>
 
         <ui:composition template="./resources/templates/profileTemplate.xhtml">
+
             <ui:define name="toptop">
-                toptop
-            </ui:define>
-            <ui:define name="top">
-                top
+                <h:form>
+                    <p:commandLink value="Profile"  styleClass="breadcrums" />
+
+                    <h:panelGrid columns="3" styleClass="userbar">
+                        <p:commandLink value="Account" ajax="false" action="#{userManager.redirectAccount()}" />
+                        <h:outputLabel value="|"/>
+                        <p:commandLink value="Logoff" ajax="false" action="#{userManager.logOff()}"/>
+                    </h:panelGrid>
+                </h:form>
             </ui:define>
 
+
             <ui:define name="right">
-                right
+                <p:fieldset legend="Agenda">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Profile"/>
+                    </h:panelGrid>
+                </p:fieldset>
             </ui:define>
 
             <ui:define name="content">
-                content
+                <p:fieldset legend="Announcements">
+
+                    <p:accordionPanel>  
+                        <p:tab title="Mathematics, 2 January 2012">  
+                            <h:panelGrid columns="1" cellpadding="10">                                
+                                <h:outputText  
+                                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                    Proin nec ante tellus. Aenean convallis adipiscing pretium. 
+                                    Sed eu odio eget ligula tempor venenatis. Nulla volutpat porta elit nec malesuada. 
+                                    Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                                    Cras in ipsum quis metus consectetur fermentum eget in odio." />  
+                            </h:panelGrid>  
+                        </p:tab>  
+                        <p:tab title="History, 2 January 2012">  
+                            <h:panelGrid columns="1" cellpadding="10">
+                                <h:outputText   value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                                Proin nec ante tellus. Aenean convallis adipiscing pretium. 
+                                                Sed eu odio eget ligula tempor venenatis. Nulla volutpat porta elit nec malesuada. 
+                                                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                                                Cras in ipsum quis metus consectetur fermentum eget in odio." />  
+                            </h:panelGrid>  
+                        </p:tab>  
+                        <p:tab title="English, 31 Dezember 2011 Part I">  
+                            <h:panelGrid columns="1" cellpadding="10">                                 
+                                <h:outputText   value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                                Proin nec ante tellus. Aenean convallis adipiscing pretium. 
+                                                Sed eu odio eget ligula tempor venenatis. Nulla volutpat porta elit nec malesuada. 
+                                                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                                                Cras in ipsum quis metus consectetur fermentum eget in odio." />  
+                            </h:panelGrid>  
+                        </p:tab>  
+                    </p:accordionPanel>  
+
+                </p:fieldset>
             </ui:define>
 
         </ui:composition>

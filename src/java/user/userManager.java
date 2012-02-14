@@ -29,7 +29,7 @@ public class userManager {
     private String password;
     private Student current_user;
     private MenuBean menu;
-
+    ServiceManager manager;
     public MenuBean getMenu() {
         return menu;
     }
@@ -69,7 +69,7 @@ public class userManager {
 
     public String checkValidUser() {
         try {
-            ServiceManager manager = new ServiceManager();
+             manager= new ServiceManager();
             
             if (manager.setAuthentication(username, sha1.parseSHA1Password(password))) {
                 current_user = manager.getCurrent_student();
@@ -107,4 +107,24 @@ public class userManager {
         return "fail";
 
     }
+    
+    public String logOff(){
+        //TODO: Propper logout
+        try {
+            manager.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "success";
+        
+    } 
+    
+    public String redirectAccount(){
+        return "success";
+        
+    }
+    public String redirectProfile(){
+        return "success";
+    }
+    
 }

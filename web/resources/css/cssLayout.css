@@ -1,10 +1,29 @@
+#toptop {
+    
+    background-color: white;
+    color: black ;
+    padding: 0px;
+    margin: 0px 0px 0px 0px;
+    position:relative;
+}
+
+.userbar{
+    position: absolute;
+    right:5px;
+    z-index: 100;
+}
+.breadcrums{
+     position: absolute;
+    left: 5px;
+    z-index:100;
+}
 
 #top {
     position: relative;
-    background-color: #036fab;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 5px;
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px 5px 0px;
 }
 
 #bottom {
@@ -16,16 +35,16 @@
 
 #left {
     float: left;
-    background-color: #ece3a5;
+    background-color: white;
     padding: 5px;
     width: 150px;
 }
 
 #right {
     float: right;
-    background-color: #ece3a5;
+    background-color: white;
     padding: 5px;
-    width: 150px;
+    width: 250px;
 }
 
 .center_content {
@@ -40,15 +59,17 @@
 }
 
 .left_content {
+    position: absolute;
     background-color: #FFFFFF;
     padding: 5px;
     margin-left: 170px;
+    margin-right: 270px;
 }
 
 .right_content {
     background-color: #FFFFFF;
     padding: 5px;
-    margin: 0px 170px 0px 170px;
+    margin: 0px 0px 0px 0px;
 }
 
 #top a:link, #top a:visited {

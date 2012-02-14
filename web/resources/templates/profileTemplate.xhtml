@@ -13,12 +13,13 @@
     </h:head>
 
     <h:body>
-
+        <div id="toptop" class="toptop" >
+           <ui:insert name="toptop">toptop</ui:insert>
+        </div>
 
         <div id="top" class="top" >
-            <p:panel>
-                <img src="./resources/images/etoile-logo-small-student.png" width="350"/>
-            </p:panel>
+             <p:graphicImage value="/resources/images/etoile-logo-small-student.png" />    
+            <p:separator id="separator"/>  
         </div>
 
         <div>
@@ -36,12 +37,8 @@
                 <ui:insert name="content">Content</ui:insert>
             </div>
 
-            <div id="right" >
-                <ui:insert name="right" >
-                    <h:form>
-
-                    </h:form>
-                </ui:insert>
+            <div id="right" class="right_content" >
+                <ui:insert name="right" />
             </div>
         </div>
     </h:body>
