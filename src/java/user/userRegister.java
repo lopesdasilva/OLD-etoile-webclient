@@ -6,6 +6,7 @@ package user;
 
 import etoile.javaapi.ServiceManager;
 import etoile.javaapi.Student;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -20,7 +21,7 @@ import sha1.sha1;
 
 @ManagedBean(name = "userRegister")
 @SessionScoped
-public class userRegister {
+public class userRegister implements Serializable{
 
     @ManagedProperty(value = "#{sha1}")
     private sha1 sha1;

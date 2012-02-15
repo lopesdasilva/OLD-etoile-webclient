@@ -10,11 +10,11 @@
         <ui:composition template="./resources/templates/disciplineTemplate.xhtml">
 
             <ui:define name="toptop">
-                  <h:form>
+                <h:form>
                     <h:panelGrid columns="5" styleClass="breadcrums" >
                         <p:commandLink value="Profile" ajax="false" action="#{userManager.redirectProfile()}" />
                         <h:outputLabel value=">"/>
-                        <p:commandLink value="#{userManager.selectedDiscipline.name}" disabled="true"/>
+                        <p:commandLink value="#{userManager.selectedDiscipline.name}" action="#{userManager.redirectAnnouncements()}" ajax="false"/>
                         <h:outputLabel value=">"/>
                         <p:commandLink value="#{userManager.selectedModule.name}" disabled="true"/>
                     </h:panelGrid>
@@ -28,7 +28,25 @@
             </ui:define>
 
             <ui:define name="content">
-                content
+                <p:fieldset legend="#{userManager.selectedModule.name}" >
+                    <p:accordionPanel value="#{userManager.selectedModule.tests}" var="test" >
+                        <p:tab title="#{test.name}" style="max-width: 300px" >  
+                            <h:panelGrid id="pgrid" columns="2" cellpadding="10">
+                                <h:outputText value="Name:" style="font-weight: bold"/>
+                                <h:outputText value="#{test.name}"/>
+                                <h:outputText value="Description:" style="font-weight: bold"/>
+                                <h:outputText value="#{test.description}"/>
+                                <h:outputText value="Begin date:" style="font-weight: bold"/>
+                                <h:outputText value="#{test.beginDate.toString()}"/>
+                                <h:outputText value="End date:" style="font-weight: bold"/>
+                                <h:outputText value="#{test.endDate.toString()}"/>
+                            </h:panelGrid>
+                            <h:form>
+                                <p:commandButton icon="ui-icon ui-icon-pencil" value="Answer test"/>
+                            </h:form>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:fieldset>
             </ui:define>
 
         </ui:composition>

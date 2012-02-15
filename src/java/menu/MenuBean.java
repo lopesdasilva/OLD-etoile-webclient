@@ -24,27 +24,26 @@ public class MenuBean implements Serializable {
 
     public MenuBean(LinkedList<Discipline> disciplines) {
         model = new DefaultMenuModel();
-        //First submenu  
-        Submenu submenu = new Submenu();
+        //First submenu 
         MenuItem item;
-
+        System.out.println("****Creating the menu");
 
 
 
 
         for (Discipline d : disciplines) {
-            submenu = new Submenu();
+            Submenu submenu = new Submenu();
 
             submenu.setLabel(d.getName());
 
             item = new MenuItem();
             item.setValue("Announcements");
             //item.setId(d.getId()+"");
-            item.setAjax(false);
-            item.setActionExpression(createAction_old("#{userManager.redirectAnnouncements}", String.class));
+            item.setAjax(false);            
             item.setActionListener(createActionListener("#{userManager.redirectAnnouncements}"));
+            item.setActionExpression(createAction_old("#{userManager.redirectAnnouncements}", String.class));
             submenu.getChildren().add(item);
-            
+
 //            MenuItem item2 = new MenuItem();
 //            item2.setValue("Contents");
 //            item2.setUrl("#");
@@ -58,8 +57,9 @@ public class MenuBean implements Serializable {
                 item = new MenuItem();
                 item.setValue(m.getName());
                 item.setAjax(false);
-                item.setActionExpression(createAction_old("#{userManager.redirectModule}", String.class));
                 item.setActionListener(createActionListener("#{userManager.redirectModule}"));
+                item.setActionExpression(createAction_old("#{userManager.redirectModule}", String.class));
+                
                 submenu.getChildren().add(item);
             }
             model.addSubmenu(submenu);
@@ -76,12 +76,9 @@ public class MenuBean implements Serializable {
     }
 
     private MethodBinding createActionListener(String actionListenerExpression) {
-         Application app = FacesContext.getCurrentInstance().getApplication();
+        Application app = FacesContext.getCurrentInstance().getApplication();
 
         return app.createMethodBinding(actionListenerExpression, new Class[]{ActionEvent.class});
 
     }
-    
-    
-    
 }

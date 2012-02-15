@@ -9,14 +9,15 @@ import etoile.javaapi.Discipline;
 import etoile.javaapi.Module;
 import etoile.javaapi.ServiceManager;
 import etoile.javaapi.Student;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import menu.MenuBean;
@@ -25,8 +26,8 @@ import org.primefaces.component.submenu.Submenu;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
-@SessionScoped
-public class userManager {
+@ApplicationScoped
+public class userManager implements Serializable{
 
     @ManagedProperty(value = "#{sha1}")
     private sha1 sha1;
@@ -35,7 +36,7 @@ public class userManager {
     private Student current_user;
     private MenuBean menu;
     ServiceManager manager;
-    
+   
     private Discipline selectedDiscipline;
     private Module selectedModule;
 
@@ -46,8 +47,7 @@ public class userManager {
     public void setSelectedModule(Module selectedModule) {
         this.selectedModule = selectedModule;
     }
-    
-    
+
     public Discipline getSelectedDiscipline() {
         return selectedDiscipline;
     }
@@ -55,8 +55,7 @@ public class userManager {
     public void setSelectedDiscipline(Discipline selectedDiscipline) {
         this.selectedDiscipline = selectedDiscipline;
     }
-    
-    
+   
     public MenuBean getMenu() {
         return menu;
     }
@@ -68,7 +67,6 @@ public class userManager {
     public void setCurrent_user(Student current_user) {
         this.current_user = current_user;
     }
-
 
     public void setSha1(sha1 sha1) {
         this.sha1 = sha1;
@@ -114,7 +112,7 @@ public class userManager {
                 
                 //TODO replace arg with List
                 
-                menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
+                this.menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
                 return "success";
             }
 
@@ -138,24 +136,29 @@ public class userManager {
     public String logOff(){
         //TODO: Propper logout
         try {
+            System.out.println("Logoff");
             manager.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "success";
+        return "logoff";
         
     } 
     
     public String redirectAccount(){
-        return "success";
+        System.out.println("Account");
+        return "account";
         
     }
+    
     public String redirectProfile(){
-        return "success";
+        System.out.println("Profile");
+        return "profile";
     }
     
     public String redirectAnnouncements(){
-        return "success";
+        System.out.println("Announcements");
+        return "announcements";
     }
     
     public void redirectAnnouncements(ActionEvent event){
@@ -168,16 +171,24 @@ public class userManager {
     }
     
     public String redirectModule(){
-        return "success";
+        System.out.println("Module");
+        return "module";
         
     }
-     public void redirectModule(ActionEvent event){
-        Object obj = event.getSource();
-        MenuItem aux_info = (MenuItem) obj;
-        Submenu aux_discipline = (Submenu) aux_info.getParent();
-        System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
-        selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
-        selectedModule=manager.userService().getModule(aux_info.getValue());
+     
+    public void redirectModule(ActionEvent event){
+        try {
+            Object obj = event.getSource();
+            MenuItem aux_info = (MenuItem) obj;
+            Submenu aux_discipline = (Submenu) aux_info.getParent();
+            System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
+            selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
+            selectedModule=manager.userService().getModule(aux_info.getValue());
+            manager.userService().updateTests(selectedModule);
+        } catch (SQLException ex) {
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+        
+        }
+       
 }

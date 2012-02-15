@@ -9,141 +9,104 @@
     
 
     <navigation-rule>
-        <from-view-id>index.xhtml</from-view-id>
+        <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{userManager.checkValidUser}</from-action>
             <from-outcome>success</from-outcome>
-            <to-view-id>profile.xhtml</to-view-id>           
+            <to-view-id>/profile.xhtml</to-view-id>           
         </navigation-case>
         <navigation-case>
             <from-action>#{userManager.checkValidUser}</from-action>
             <from-outcome>fail</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-action>#{userRegister.createUser}</from-action>
             <from-outcome>success</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>           
+            <to-view-id>/index.xhtml</to-view-id>           
         </navigation-case>
         <navigation-case>
             <from-action>#{userRegister.createUser}</from-action>
             <from-outcome>fail</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
      
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>profile.xhtml</from-view-id>
+        <from-view-id>/profile.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{userManager.logOff()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>           
+            <from-outcome>logoff</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>           
         </navigation-case>   
         <navigation-case>
-            <from-action>#{userManager.redirectAccount()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>account.xhtml</to-view-id>           
+            <from-outcome>account</from-outcome>
+            <to-view-id>/account.xhtml</to-view-id>           
         </navigation-case>
         <navigation-case>
-            <from-action>#{userManager.redirectProfile()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>profile.xhtml</to-view-id>           
+            <from-outcome>profile</from-outcome>
+            <to-view-id>/profile.xhtml</to-view-id>           
         </navigation-case>
         <navigation-case>
-            <from-action>#{userManager.redirectAnnouncements}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>announcements.xhtml</to-view-id>           
+            <from-outcome>announcements</from-outcome>
+            <to-view-id>/announcements.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>            
+            <from-outcome>module</from-outcome>
+            <to-view-id>/module.xhtml</to-view-id>           
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/announcements.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logoff</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>           
+        </navigation-case>   
+        <navigation-case>
+            <from-outcome>account</from-outcome>
+            <to-view-id>/account.xhtml</to-view-id>           
         </navigation-case>
         <navigation-case>
-            <from-action>#{userManager.redirectModule}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>module.xhtml</to-view-id>           
+            <from-outcome>profile</from-outcome>
+            <to-view-id>/profile.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>announcements</from-outcome>
+            <to-view-id>/announcements.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>            
+            <from-outcome>module</from-outcome>
+            <to-view-id>/module.xhtml</to-view-id>           
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>discipline.xhtml</from-view-id>
+        <from-view-id>/module.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{userManager.logOff()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>           
+            <from-outcome>logoff</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>            
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>module</from-outcome>
+            <to-view-id>/module.xhtml</to-view-id>            
         </navigation-case>   
         <navigation-case>
-            <from-action>#{userManager.redirectAccount()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>account.xhtml</to-view-id>           
+            <from-outcome>account</from-outcome>
+            <to-view-id>/account.xhtml</to-view-id>           
         </navigation-case>
         <navigation-case>
-            <from-action>#{userManager.redirectProfile()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>profile.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectAnnouncements}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>announcements.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectModule}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>module.xhtml</to-view-id>           
+            <from-outcome>announcements</from-outcome>
+            <to-view-id>/announcements.xhtml</to-view-id>           
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>module.xhtml</from-view-id>
+        <from-view-id>/account.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{userManager.logOff()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>           
+            <from-outcome>logoff</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>           
         </navigation-case>   
         <navigation-case>
-            <from-action>#{userManager.redirectAccount()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>account.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectProfile()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>profile.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectAnnouncements}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>announcements.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectModule}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>module.xhtml</to-view-id>           
+            <from-outcome>announcements</from-outcome>
+            <to-view-id>/announcements.xhtml</to-view-id>           
         </navigation-case>
     </navigation-rule>
- 
-    <navigation-rule>
-        <from-view-id>announcements.xhtml</from-view-id>
-        <navigation-case>
-            <from-action>#{userManager.logOff()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>           
-        </navigation-case>   
-        <navigation-case>
-            <from-action>#{userManager.redirectAccount()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>account.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectProfile()}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>profile.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectAnnouncements}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>announcements.xhtml</to-view-id>           
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{userManager.redirectModule}</from-action>
-            <from-outcome>success</from-outcome>
-            <to-view-id>module.xhtml</to-view-id>           
-        </navigation-case>
-    </navigation-rule>
-        
 </faces-config>
