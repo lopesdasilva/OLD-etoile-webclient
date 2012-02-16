@@ -57,7 +57,12 @@ public class userManager implements Serializable{
     }
    
     public MenuBean getMenu() {
-        return menu;
+        //TODO:Evitar a linha de código seguinte.
+        menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
+//        for( MenuItem m: menu.getModel().getMenuItems()){
+//        System.out.println(m.toString());
+//        }
+        return this.menu;
     }
 
     public Student getCurrent_user() {
