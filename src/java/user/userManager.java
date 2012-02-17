@@ -5,10 +5,7 @@
 package user;
 
 
-import etoile.javaapi.Discipline;
-import etoile.javaapi.Module;
-import etoile.javaapi.ServiceManager;
-import etoile.javaapi.Student;
+import etoile.javaapi.*;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -18,15 +15,17 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import menu.MenuBean;
+import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
-@ApplicationScoped
+@SessionScoped
 public class userManager implements Serializable{
 
     @ManagedProperty(value = "#{sha1}")
@@ -39,8 +38,19 @@ public class userManager implements Serializable{
    
     private Discipline selectedDiscipline;
     private Module selectedModule;
+    public Test selectedTest;
 
-    public Module getSelectedModule() {
+    public Test getSelectedTest() {
+        if(selectedTest!=null)
+        System.out.println(selectedTest.author);
+        return selectedTest;
+    }
+
+    public void setSelectedTest(Test selectedTest) {
+        this.selectedTest = selectedTest;
+    }
+
+        public Module getSelectedModule() {
         return selectedModule;
     }
 
@@ -195,5 +205,28 @@ public class userManager implements Serializable{
         }
         
         }
+    
+    
+    public void answerTest(ActionEvent actionEvent){
+        Object obj = actionEvent.getSource();
+        CommandButton cb = (CommandButton) obj;
+   
+        System.out.println("DEBUG: TEST ID: " + cb.getLabel());
+        for (Test t : selectedModule.getTests()){
+            if(t.getId() == Integer.parseInt(cb.getLabel()) ){
+                try {
+                    this.selectedTest=t;
+                    manager.userService().updateQuestions(selectedTest);
+                } catch (SQLException ex) {
+                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        System.out.println(selectedTest.author);
+        
+    }
+    
+    
        
 }

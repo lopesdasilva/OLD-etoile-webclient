@@ -42,14 +42,43 @@
                                 <h:outputText value="#{test.endDate.toString()}"/>
                             </h:panelGrid>
                             <h:form>
-                                <p:commandButton icon="ui-icon ui-icon-pencil" value="Answer test"/>
+                                <p:commandButton icon="ui-icon ui-icon-pencil" value="Answer test"  onclick="dlgTest.show();"  actionListener="#{userManager.answerTest}"   label="#{test.id}"/>
                             </h:form>
                         </p:tab>
                     </p:accordionPanel>
                 </p:fieldset>
+                <p:dialog  id="tests" header="#{userManager.selectedTest.name}" widgetVar="dlgTest" modal="true" height="500" width="800" draggable="false" resizable="false"   > 
+
+            <p:growl id="growl" showDetail="true" sticky="false" autoUpdate="true" />
+<!--            <p:tabView id="tabv" dynamic="true" cache="false" >  
+
+                        <p:tab id="EM" title="Escolha Multipla" >
+
+                            <p:column>
+                                <p:accordionPanel dynamic="true" value="#{userManager.selectedTest.questions}" var="question" >
+                <p:tab title="#{question.text}">
+                </p:tab>
+            </p:accordionPanel>
+                            </p:column>
+                        </p:tab>
+            </p:tabView>-->
+
+            <p:tabView value="#{userManager.selectedTest.questions}"  var="question" id="questions" dynamic="true" cache="false" >
+                <p:tab title="#{question.id}"  >
+                      <h:form > 
+                    <p:panelGrid columns="2" style="border: white " >
+                    <h:outputText value="Question:"/>
+                    <h:outputText value="#{question.text}"/>
+                    </p:panelGrid>
+                    <p:inputTextarea value=""/>
+                      </h:form > 
+                </p:tab>
+                
+            </p:tabView>
+        </p:dialog>
             </ui:define>
 
         </ui:composition>
-
+       
     </body>
 </html>
