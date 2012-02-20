@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -41,8 +40,6 @@ public class userManager implements Serializable{
     public Test selectedTest;
 
     public Test getSelectedTest() {
-        if(selectedTest!=null)
-        System.out.println(selectedTest.author);
         return selectedTest;
     }
 
@@ -206,7 +203,7 @@ public class userManager implements Serializable{
         
         }
     
-    
+  
     public void answerTest(ActionEvent actionEvent){
         Object obj = actionEvent.getSource();
         CommandButton cb = (CommandButton) obj;
@@ -224,6 +221,7 @@ public class userManager implements Serializable{
         }
         
         System.out.println(selectedTest.author);
+        System.out.println(selectedTest.name);
         
     }
     
