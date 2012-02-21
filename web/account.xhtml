@@ -28,9 +28,37 @@
 
 
             <ui:define name="content">
-                <p:fieldset legend="Account">
-
-                </p:fieldset>
+                <h:form>
+                    <p:fieldset legend="Account">
+                        <p:fieldset legend="Learner's Information">
+                            <p:panelGrid columns="2" style="border-color: inactiveborder">
+                                <p:panelGrid columns="2" style="border-color: inactiveborder">
+                                    <h:outputText value="First Name: "/>
+                                    <p:inputText value="#{userManager.current_user.firstname}"/>
+                                    <h:outputText value="Last Name: "/>
+                                    <p:inputText value="#{userManager.current_user.lastname}"/>
+                                    <h:outputText value="Email: "/>
+                                    <p:inputText value="#{userManager.current_user.email}"/>
+                                </p:panelGrid>
+                                <p:photoCam ></p:photoCam>
+                            </p:panelGrid>
+                            <p:commandButton value="Save" style="position: relative; left: 580px"/>
+                        </p:fieldset>
+                        <p:fieldset legend="Change Password">
+                            
+                            <p:panelGrid columns="2" style="border-color: inactiveborder">
+                                <h:outputText value="Old Password: "/>
+                                <p:password value="" />
+                                <h:outputText value="New Password: "/>
+                                <p:password value=""/>
+                                <h:outputText value="Retype Password: "/>
+                                <p:password value=""/>
+                                </p:panelGrid>
+                            <p:commandButton value="Save new password" style="position: relative; left: 490px"/>
+                        </p:fieldset>
+                        
+                    </p:fieldset>
+                </h:form>
             </ui:define>
 
             <ui:define name="right">

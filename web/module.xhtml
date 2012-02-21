@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-
+ 
     <body>
 
         <ui:composition template="./resources/templates/disciplineTemplate.xhtml">
@@ -52,7 +52,7 @@
                                 <p:dialog id="dlgTest" header="#{userManager.selectedTest.name} Test" widgetVar="dlgTest" dynamic="true" cache="false" modal="true" height="500" width="800" draggable="false" resizable="false"  appendToBody="true" > 
 
 
-                                    <h:outputText value="Please answer the following questions:" style="text-height: font-size 16"/>
+                                    <h:outputText value="Please answer the following questions:" style="font-weight: bold"/>
                                     <p:spacer width="490" height="10" />
                                     <p:commandButton value="save" type="button"/>
                                     <p:tabView value="#{userManager.selectedTest.questions}" var="q" dynamic="true" cache="false" >
@@ -60,17 +60,19 @@
                                             <p:column>
                                                 <p:accordionPanel multiple="true">
                                                     <p:tab title="Question">
-                                                        <h:outputText value="Question #{q.id} - #{q.text}"/>
+                                                        <h:outputText value="Question #{q.id} - #{q.text}" style="font-weight: bold"/>
 
                                                         <br></br>
                                                         <p:column>
-                                                            <p:inputTextarea id="Open" value="#{q.answer}" rendered="#{q.isOpen}" />
-
-                                                            <p:selectOneRadio id="OneChoice" layout="pageDirection" rendered="#{q.isOneChoice}" >  
+                                                            <p:inputTextarea id="Open" value="#{q.userAnswer}" rendered="#{q.isOpen}" />
+                                                        </p:column>
+                                                        <p:column> 
+                                                            <p:selectOneRadio id="OneChoice"  layout="pageDirection" rendered="#{q.isOneChoice}" >  
                                                                 <f:selectItems value="#{q.possibleAnswers}"/>  
-                                                               
-                                                            </p:selectOneRadio>
 
+                                                            </p:selectOneRadio>
+                                                        </p:column>
+                                                        <p:column>
                                                             <p:selectManyCheckbox id="MultipleChoice" layout="pageDirection" rendered="#{q.isMultipleChoice}">
                                                                 <f:selectItems value="#{q.possibleAnswers}"/>  
                                                             </p:selectManyCheckbox>
@@ -81,24 +83,29 @@
 
                                                     </p:tab>
                                                     <p:tab title="URL">
-                                                        <p:panelGrid columns="2">
+                                                        <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
-                                                                <p:dataList value="#{q.URLS}" var="url" >
+                                                                <p:dataList value="#{q.URLS}" var="url" style="border-color: inactiveborder">
                                                                     <p:commandLink value="#{url.url}" title="#{url.name}"/>
                                                                 </p:dataList>
                                                             </p:column>
                                                             <p:column>
-                                                                <p:panelGrid columns="1">
-                                                                    <h:outputText value="Submit below any new links you found useful for answering the question:"/>
-                                                                    <p:column>
-                                                                        <h:outputText value="URL:"/>
-                                                                        <p:inputText value="" size="25"/>
 
-                                                                    </p:column>  
-                                                                    <p:commandButton value="Submit URL" style="position: relative; left: 120px "/>
+                                                                <h:outputText value="Submit below any new links you found useful for answering the question:"/>
+                                                                <p></p>
+                                                                <p:inplace label="Insert a new URL" editor="true"  style="font-weight: bold">
+                                                                    <h:form>
+                                                                        <p:panelGrid columns="2" style="border-color: inactiveborder">
+                                                                        <h:outputText value="URL Name: "/>
+                                                                        <p:inputText value=""/>
+                                                                        <h:outputText value="URL: "/>
+                                                                        <p:inputText value=""/>
+                                                                    </p:panelGrid>
+                                                                        </h:form>
+                                                                </p:inplace>  
 
-                                                                </p:panelGrid>
+
 
                                                             </p:column>
                                                         </p:panelGrid>
