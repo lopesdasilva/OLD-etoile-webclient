@@ -66,14 +66,13 @@
                                                         <p:column>
                                                             <p:inputTextarea id="Open" value="#{q.answer}" rendered="#{q.isOpen}" />
 
-<!--TODO: DIZER ONDE VAI GUARDAR A OPCAO, AS POSSIBLE ANSWERS JÀ FUNCIONARAM E AGORA NAO DA, NAO SEI PK-->
                                                             <p:selectOneRadio id="OneChoice" layout="pageDirection" rendered="#{q.isOneChoice}" >  
-                                                                <f:selectItem value="#{q.possibleAnswers}"/>  
+                                                                <f:selectItems value="#{q.possibleAnswers}"/>  
                                                                
                                                             </p:selectOneRadio>
 
                                                             <p:selectManyCheckbox id="MultipleChoice" layout="pageDirection" rendered="#{q.isMultipleChoice}">
-                                                                <f:selectItem value="#{q.possibleAnswers}"/>  
+                                                                <f:selectItems value="#{q.possibleAnswers}"/>  
                                                             </p:selectManyCheckbox>
                                                         </p:column>
 
