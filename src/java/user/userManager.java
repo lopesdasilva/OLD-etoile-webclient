@@ -25,7 +25,7 @@ import sha1.sha1;
 
 @ManagedBean(name = "userManager")
 @SessionScoped
-public class userManager implements Serializable{
+public class userManager  implements Serializable{
 
     @ManagedProperty(value = "#{sha1}")
     private sha1 sha1;

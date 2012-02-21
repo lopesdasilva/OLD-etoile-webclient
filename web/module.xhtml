@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <body>
 
@@ -43,31 +44,75 @@
                                     <h:outputText value="#{test.endDate.toString()}"/>
                                 </h:panelGrid>
 
-                            <p:column>
+                                <p:column>
 
-                                <p:commandButton icon="ui-icon ui-icon-pencil"  update="dlgTest" value="Answer test"  oncomplete="dlgTest.show();" actionListener="#{userManager.answerTest}"   label="#{test.id}"/>
-                            </p:column>
-<!--Falta arranjar o Layout-->
+                                    <p:commandButton icon="ui-icon ui-icon-pencil"  update="dlgTest" value="Answer test"  oncomplete="dlgTest.show();" actionListener="#{userManager.answerTest}"   label="#{test.id}"/>
+                                </p:column>
+                                <!--Falta arranjar o Layout-->
                                 <p:dialog id="dlgTest" header="#{userManager.selectedTest.name} Test" widgetVar="dlgTest" dynamic="true" cache="false" modal="true" height="500" width="800" draggable="false" resizable="false"  appendToBody="true" > 
-                                   
-                                    <h:outputText value="Please answer the following questions:"/>
-                                    <p:tabView value="#{userManager.selectedTest.questions}" var="q">
-                                        <p:tab title="#{q.id} ">
-                                        
+
+
+                                    <h:outputText value="Please answer the following questions:" style="text-height: font-size 16"/>
+                                    <p:spacer width="490" height="10" />
+                                    <p:commandButton value="save" type="button"/>
+                                    <p:tabView value="#{userManager.selectedTest.questions}" var="q" dynamic="true" cache="false" >
+                                        <p:tab title="#{q.id}">
+                                            <p:column>
+                                                <p:accordionPanel multiple="true">
+                                                    <p:tab title="Question">
+                                                        <h:outputText value="Question #{q.id} - #{q.text}"/>
+
+                                                        <br></br>
+                                                        <p:column>
+                                                            <p:inputTextarea id="Open" value="#{q.answer}" rendered="#{q.isOpen}" />
+
+<!--TODO: DIZER ONDE VAI GUARDAR A OPCAO, AS POSSIBLE ANSWERS JÀ FUNCIONARAM E AGORA NAO DA, NAO SEI PK-->
+                                                            <p:selectOneRadio id="OneChoice" layout="pageDirection" rendered="#{q.isOneChoice}" >  
+                                                                <f:selectItem value="#{q.possibleAnswers}"/>  
+                                                               
+                                                            </p:selectOneRadio>
+
+                                                            <p:selectManyCheckbox id="MultipleChoice" layout="pageDirection" rendered="#{q.isMultipleChoice}">
+                                                                <f:selectItem value="#{q.possibleAnswers}"/>  
+                                                            </p:selectManyCheckbox>
+                                                        </p:column>
+
+
+
+
+                                                    </p:tab>
+                                                    <p:tab title="URL">
+                                                        <p:panelGrid columns="2">
+                                                            <p:column>
+                                                                <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
+                                                                <p:dataList value="#{q.URLS}" var="url" >
+                                                                    <p:commandLink value="#{url.url}" title="#{url.name}"/>
+                                                                </p:dataList>
+                                                            </p:column>
+                                                            <p:column>
+                                                                <p:panelGrid columns="1">
+                                                                    <h:outputText value="Submit below any new links you found useful for answering the question:"/>
+                                                                    <p:column>
+                                                                        <h:outputText value="URL:"/>
+                                                                        <p:inputText value="" size="25"/>
+
+                                                                    </p:column>  
+                                                                    <p:commandButton value="Submit URL" style="position: relative; left: 120px "/>
+
+                                                                </p:panelGrid>
+
+                                                            </p:column>
+                                                        </p:panelGrid>
+                                                    </p:tab>
+
+                                                </p:accordionPanel>
+                                            </p:column>
                                         </p:tab>
                                     </p:tabView>
-                                        
-                                        
-                                        
-                                        
-                                        <p:dataList value="#{userManager.selectedTest.questions}" var="question" >
-                                            <p:column>
-                                                <h:outputText value="Question #{question.id}"/>
-                                                    <h:outputText value="#{question.text}"/>
-                                            </p:column>
-                                            
-                                        </p:dataList>
-                                   
+                                    <!--                                                                        TODO:usar o rendered para controlar quais é que deve mostrar-->
+                                    <p:spacer width="630" height="10" />
+                                    <p:commandButton value="Next" type="button" />
+                                    <p:commandButton value="Previous" type="button" />
                                 </p:dialog>  
 
                             </p:tab>
