@@ -56,11 +56,11 @@
                                     <p:spacer width="490" height="10" />
                                     <p:commandButton value="save" type="button"/>
                                     <p:tabView value="#{userManager.selectedTest.questions}" var="q" dynamic="true" cache="false" >
-                                        <p:tab title="#{q.id}">
+                                        <p:tab title="#{q.number}">
                                             <p:column>
                                                 <p:accordionPanel multiple="true">
                                                     <p:tab title="Question">
-                                                        <h:outputText value="Question #{q.id} - #{q.text}" style="font-weight: bold"/>
+                                                        <h:outputText value="Question #{q.number} - #{q.text}" style="font-weight: bold"/>
 
                                                         <br></br>
                                                         <p:column>
