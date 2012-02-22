@@ -38,6 +38,17 @@ public class userManager  implements Serializable{
     private Discipline selectedDiscipline;
     private Module selectedModule;
     public Test selectedTest;
+    private String userAnswer="";
+
+    public String getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
+    }
+    
+    
 
     public Test getSelectedTest() {
         return selectedTest;
