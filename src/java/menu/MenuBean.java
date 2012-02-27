@@ -37,7 +37,7 @@ public class MenuBean implements Serializable {
             submenu.setLabel(d.getName());
 
             item = new MenuItem();
-            item.setValue("Announcements");
+            item.setValue("News");
             //item.setId(d.getId()+"");
             item.setAjax(false);            
             item.setActionListener(createActionListener("#{userManager.redirectAnnouncements}"));

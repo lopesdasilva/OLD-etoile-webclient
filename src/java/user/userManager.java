@@ -6,9 +6,11 @@ package user;
 
 
 import etoile.javaapi.*;
+import etoile.javaapi.question.Question;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -224,6 +226,7 @@ public class userManager  implements Serializable{
             if(t.getId() == Integer.parseInt(cb.getLabel()) ){
                 try {
                     this.selectedTest=t;
+                    selectedTest.setQuestions(new LinkedList<Question>());
                     manager.userService().updateQuestions(selectedTest);
                 } catch (SQLException ex) {
                     Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
