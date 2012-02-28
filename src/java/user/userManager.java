@@ -181,11 +181,23 @@ public class userManager  implements Serializable{
         return "profile";
     }
     
+    public String redirectDiscussionForum(){
+        System.out.println("Forum");
+        return "forum";
+    }
+    
+    
     public String redirectAnnouncements(){
         System.out.println("Announcements");
         return "announcements";
     }
-    
+     public void redirectDiscussionForum(ActionEvent event){
+         Object obj = event.getSource();
+        MenuItem aux_info = (MenuItem) obj;
+        Submenu aux_discipline = (Submenu) aux_info.getParent();
+        System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
+        selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
+     }
     public void redirectAnnouncements(ActionEvent event){
         Object obj = event.getSource();
         MenuItem aux_info = (MenuItem) obj;

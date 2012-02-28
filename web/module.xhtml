@@ -87,8 +87,8 @@
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
                                                                 <p:dataList value="#{q.URLS}" var="url" style="border-color: inactiveborder">
-                                                                   <a href="#{url.name}" target="_blank">#{url.name}</a>
-                                                                    
+                                                                    <a href="http://#{url.name}" target="_blank">#{url.url}</a>
+                                                            
                                                                 </p:dataList>
                                                             </p:column>
                                                             <p:column>
