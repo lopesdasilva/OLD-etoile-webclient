@@ -4,7 +4,6 @@
  */
 package user;
 
-
 import etoile.javaapi.*;
 import etoile.javaapi.question.Question;
 import java.io.Serializable;
@@ -27,7 +26,7 @@ import sha1.sha1;
 
 @ManagedBean(name = "userManager")
 @SessionScoped
-public class userManager  implements Serializable{
+public class userManager implements Serializable {
 
     @ManagedProperty(value = "#{sha1}")
     private sha1 sha1;
@@ -36,11 +35,19 @@ public class userManager  implements Serializable{
     private Student current_user;
     private MenuBean menu;
     ServiceManager manager;
-   
     private Discipline selectedDiscipline;
     private Module selectedModule;
     public Test selectedTest;
-    private String userAnswer="";
+    private String userAnswer = "";
+    private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public String getUserAnswer() {
         return userAnswer;
@@ -49,8 +56,6 @@ public class userManager  implements Serializable{
     public void setUserAnswer(String userAnswer) {
         this.userAnswer = userAnswer;
     }
-    
-    
 
     public Test getSelectedTest() {
         return selectedTest;
@@ -60,7 +65,7 @@ public class userManager  implements Serializable{
         this.selectedTest = selectedTest;
     }
 
-        public Module getSelectedModule() {
+    public Module getSelectedModule() {
         return selectedModule;
     }
 
@@ -75,7 +80,7 @@ public class userManager  implements Serializable{
     public void setSelectedDiscipline(Discipline selectedDiscipline) {
         this.selectedDiscipline = selectedDiscipline;
     }
-   
+
     public MenuBean getMenu() {
         //TODO:Evitar a linha de código seguinte.
         menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
@@ -119,24 +124,24 @@ public class userManager  implements Serializable{
 
     public String checkValidUser() {
         try {
-             manager= new ServiceManager();
-            
+            manager = new ServiceManager();
+
             if (manager.setAuthentication(username, sha1.parseSHA1Password(password))) {
                 current_user = manager.getCurrent_student();
-                
+
                 //TODO:REMOVE
-                System.out.println("***************Name:"+current_user.firstname);
-                
+                System.out.println("***************Name:" + current_user.firstname);
+
                 manager.userService().updateCourses(current_user.getId());
-                
-                
+
+
                 //TODO:REMOVE
-                System.out.println("***************Name:"+current_user.courses.getFirst().getName());
-                
-               
-                
+                System.out.println("***************Name:" + current_user.courses.getFirst().getName());
+
+
+
                 //TODO replace arg with List
-                
+
                 this.menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
                 return "success";
             }
@@ -157,8 +162,8 @@ public class userManager  implements Serializable{
         return "fail";
 
     }
-    
-    public String logOff(){
+
+    public String logOff() {
         //TODO: Propper logout
         try {
             System.out.println("Logoff");
@@ -167,77 +172,77 @@ public class userManager  implements Serializable{
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "logoff";
-        
-    } 
-    
-    public String redirectAccount(){
+
+    }
+
+    public String redirectAccount() {
         System.out.println("Account");
         return "account";
-        
+
     }
-    
-    public String redirectProfile(){
+
+    public String redirectProfile() {
         System.out.println("Profile");
         return "profile";
     }
-    
-    public String redirectDiscussionForum(){
+
+    public String redirectDiscussionForum() {
         System.out.println("Forum");
         return "forum";
     }
-    
-    
-    public String redirectAnnouncements(){
+
+    public String redirectAnnouncements() {
         System.out.println("Announcements");
         return "announcements";
     }
-     public void redirectDiscussionForum(ActionEvent event){
-         Object obj = event.getSource();
-        MenuItem aux_info = (MenuItem) obj;
-        Submenu aux_discipline = (Submenu) aux_info.getParent();
-        System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
-        selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
-     }
-    public void redirectAnnouncements(ActionEvent event){
+
+    public void redirectDiscussionForum(ActionEvent event) {
         Object obj = event.getSource();
         MenuItem aux_info = (MenuItem) obj;
         Submenu aux_discipline = (Submenu) aux_info.getParent();
-        System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
-        selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
-        System.out.println("Selected Discipline: " + selectedDiscipline.getName()+" id"+selectedDiscipline.getId());
+        System.out.println("PRESSSSSSED " + aux_info.getValue() + "FROM:" + aux_discipline.getLabel());
+        selectedDiscipline = manager.userService().getDiscipline(aux_discipline.getLabel());
     }
-    
-    public String redirectModule(){
+
+    public void redirectAnnouncements(ActionEvent event) {
+        Object obj = event.getSource();
+        MenuItem aux_info = (MenuItem) obj;
+        Submenu aux_discipline = (Submenu) aux_info.getParent();
+        System.out.println("PRESSSSSSED " + aux_info.getValue() + "FROM:" + aux_discipline.getLabel());
+        selectedDiscipline = manager.userService().getDiscipline(aux_discipline.getLabel());
+        System.out.println("Selected Discipline: " + selectedDiscipline.getName() + " id" + selectedDiscipline.getId());
+    }
+
+    public String redirectModule() {
         System.out.println("Module");
         return "module";
-        
+
     }
-     
-    public void redirectModule(ActionEvent event){
+
+    public void redirectModule(ActionEvent event) {
         try {
             Object obj = event.getSource();
             MenuItem aux_info = (MenuItem) obj;
             Submenu aux_discipline = (Submenu) aux_info.getParent();
-            System.out.println("PRESSSSSSED "+aux_info.getValue() +"FROM:"+aux_discipline.getLabel());
-            selectedDiscipline=manager.userService().getDiscipline(aux_discipline.getLabel());
-            selectedModule=manager.userService().getModule(aux_info.getValue());
+            System.out.println("PRESSSSSSED " + aux_info.getValue() + "FROM:" + aux_discipline.getLabel());
+            selectedDiscipline = manager.userService().getDiscipline(aux_discipline.getLabel());
+            selectedModule = manager.userService().getModule(aux_info.getValue());
             manager.userService().updateTests(selectedModule);
         } catch (SQLException ex) {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        }
-    
-  
-    public void answerTest(ActionEvent actionEvent){
+
+    }
+
+    public void answerTest(ActionEvent actionEvent) {
         Object obj = actionEvent.getSource();
         CommandButton cb = (CommandButton) obj;
-   
+
         System.out.println("DEBUG: TEST ID: " + cb.getLabel());
-        for (Test t : selectedModule.getTests()){
-            if(t.getId() == Integer.parseInt(cb.getLabel()) ){
+        for (Test t : selectedModule.getTests()) {
+            if (t.getId() == Integer.parseInt(cb.getLabel())) {
                 try {
-                    this.selectedTest=t;
+                    this.selectedTest = t;
                     selectedTest.setQuestions(new LinkedList<Question>());
                     manager.userService().updateQuestions(selectedTest);
                 } catch (SQLException ex) {
@@ -245,12 +250,43 @@ public class userManager  implements Serializable{
                 }
             }
         }
-        
+
         System.out.println(selectedTest.author);
         System.out.println(selectedTest.name);
-        
+
     }
-    
-    
-       
+
+    public void saveTest(ActionEvent actionEvent) {
+//            selectedDiscipline.id;
+//            selectedModule.id;
+//            selectedTest.id;
+        Object obj = actionEvent.getSource();
+        CommandButton cb = (CommandButton) obj;
+        System.out.println("DEBUG: Question ID: " + cb.getLabel());
+        int qID = Integer.parseInt(cb.getLabel());
+        for (Question q : selectedTest.getQuestions()) {
+            if (q.isOpenQuestion())
+            if (q.getId() == qID) {
+                try {
+                    manager.userService().updateOpenAnswer(q.getAnswerId(), q.getUserAnswer());
+                    
+                    System.out.println("text: " + text);
+                    System.out.println("Question: " + q.getText());
+                    System.out.println("Answer: " + q.getUserAnswer());
+                }
+                //
+                catch (SQLException ex) {
+                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+//            
+        }
+
+//        manager.userService().updateOpenAnswer(, userAnswer);
+
+
+//        manager.userService().updateOpenQuestion()
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Saved Answer"));
+        System.out.println("Sved");
+    }
 }
