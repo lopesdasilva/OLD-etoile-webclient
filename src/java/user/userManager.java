@@ -40,6 +40,24 @@ public class userManager implements Serializable {
     public Test selectedTest;
     private String userAnswer = "";
     private String text;
+    private String urlName;
+    private String urlAdress;
+
+    public String getUrlAdress() {
+        return urlAdress;
+    }
+
+    public void setUrlAdress(String urlAdress) {
+        this.urlAdress = urlAdress;
+    }
+
+    public String getUrlName() {
+        return urlName;
+    }
+
+    public void setUrlName(String urlName) {
+        this.urlName = urlName;
+    }
 
     public String getText() {
         return text;
@@ -265,18 +283,18 @@ public class userManager implements Serializable {
         System.out.println("DEBUG: Question ID: " + cb.getLabel());
         int qID = Integer.parseInt(cb.getLabel());
         for (Question q : selectedTest.getQuestions()) {
-            if (q.isOpenQuestion())
-            if (q.getId() == qID) {
-                try {
-                    manager.userService().updateOpenAnswer(q.getAnswerId(), q.getUserAnswer());
-                    
-                    System.out.println("text: " + text);
-                    System.out.println("Question: " + q.getText());
-                    System.out.println("Answer: " + q.getUserAnswer());
-                }
-                //
-                catch (SQLException ex) {
-                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+            if (q.isOpenQuestion()) {
+                if (q.getId() == qID) {
+                    try {
+                        manager.userService().updateOpenAnswer(q.getAnswerId(), q.getUserAnswer());
+
+                        System.out.println("text: " + text);
+                        System.out.println("Question: " + q.getText());
+                        System.out.println("Answer: " + q.getUserAnswer());
+                    } //
+                    catch (SQLException ex) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "Answer not saved."));
+                    }
                 }
             }
 //            
@@ -287,6 +305,21 @@ public class userManager implements Serializable {
 
 //        manager.userService().updateOpenQuestion()
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Saved Answer"));
-        System.out.println("Sved");
+
+    }
+
+    public void submitURL() {
+        try {
+            System.out.println("Submit URL");
+            System.out.println("Name: "+urlName);
+            System.out.println("URL: "+urlAdress);
+            manager.userService().addURL(urlName, urlAdress);
+            urlName="";
+            urlAdress="";
+        } catch (SQLException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "New URL submission failed"));
+
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "New URL submitted"));
     }
 }

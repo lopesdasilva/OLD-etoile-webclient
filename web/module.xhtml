@@ -116,16 +116,22 @@
 
                                                                 <h:outputText value="Submit below any new links you found useful for answering the question:"/>
                                                                 <p></p>
-                                                                <p:inplace label="Insert a new URL" editor="true"  style="font-weight: bold">
+
+
+                                                                <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                                     <h:form>
-                                                                        <p:panelGrid columns="2" style="border-color: inactiveborder">
-                                                                            <h:outputText value="URL Name: "/>
-                                                                            <p:inputText value=""/>
-                                                                            <h:outputText value="URL: "/>
-                                                                            <p:inputText value=""/>
-                                                                        </p:panelGrid>
+                                                                        <h:outputText value="URL Name: "/>
+                                                                        <p:inputText id ="urlName" label="urlName" value="#{userManager.urlName}">
+                                                                            <p:ajax event="keyup"/>
+                                                                        </p:inputText>
+                                                                        <h:outputText  value="URL: "/>
+                                                                        <p:inputText id="urlAddress" label="urlAddress" value="#{userManager.urlAdress}">
+                                                                            <p:ajax event="keyup"/>
+                                                                        </p:inputText>
                                                                     </h:form>
-                                                                </p:inplace>  
+                                                                </p:panelGrid>
+                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}"/>
+
 
 
 
