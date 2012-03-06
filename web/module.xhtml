@@ -37,7 +37,7 @@
 
 
                     <p:fieldset legend="#{userManager.selectedModule.name}" >
-                        <p:accordionPanel value="#{userManager.selectedModule.tests}" var="test" >
+                        <p:accordionPanel value="#{userManager.selectedModule.tests}" var="test" style="width:500px;height:300px;" >
                             <p:tab title="#{test.name}" style="max-width: 300px" >  
                                 <h:panelGrid id="pgrid" columns="2" cellpadding="10">
                                     <h:outputText value="Name:" style="font-weight: bold"/>
@@ -103,7 +103,7 @@
 
 
                                                     </p:tab>
-                                                    <p:tab title="URL">
+                                                    <p:tab id="URL" title="URL">
                                                         <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
@@ -130,7 +130,7 @@
                                                                         </p:inputText>
                                                                     </h:form>
                                                                 </p:panelGrid>
-                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}"/>
+                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}" label="#{q.id}" />
 
 
 

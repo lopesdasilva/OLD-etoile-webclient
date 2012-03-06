@@ -22,6 +22,7 @@ import menu.MenuBean;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
+import org.primefaces.event.TabChangeEvent;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
@@ -308,18 +309,44 @@ public class userManager implements Serializable {
 
     }
 
-    public void submitURL() {
-        try {
-            System.out.println("Submit URL");
-            System.out.println("Name: "+urlName);
-            System.out.println("URL: "+urlAdress);
-            manager.userService().addURL(urlName, urlAdress);
-            urlName="";
-            urlAdress="";
-        } catch (SQLException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "New URL submission failed"));
+    public void submitURL(ActionEvent actionEvent) {
+
+
+
+        Object obj = actionEvent.getSource();
+        CommandButton cb = (CommandButton) obj;
+
+        int qID = Integer.parseInt(cb.getLabel());
+        System.out.println("DEBUG: Submit URL");
+        System.out.println("DEBUG: Username: " + username);
+        System.out.println("DEBUG: Question ID: " + qID);
+        System.out.println("DEBUG: URL Name: " + urlName);
+        System.out.println("DEBUG: URL Address: " + urlAdress);
+
+        for (Question q : selectedTest.getQuestions()) {
+            if (q.isOpenQuestion()) {
+                if (q.getId() == qID) {
+                    try {
+                        manager.userService().addURL(urlName, urlAdress,q.getQuestionType(),q.getId());
+                        urlName = "";
+                        urlAdress = "";
+                    } catch (SQLException ex) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "New URL submission failed"));
+
+                    }
+                }
+            }
 
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "New URL submitted"));
+
+    }
+    //NOT WORKING
+
+    public void onTabChange(TabChangeEvent event) {
+        System.out.println("ID: " + event.getTab().getId());
+        System.out.println("Title: " + event.getTab().getTitle());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tab Changed", "Active Tab: " + event.getTab().getId()));
+
     }
 }
