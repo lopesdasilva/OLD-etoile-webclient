@@ -3,3 +3,6 @@
 /dist/
 /testes/nbproject/private/
 /testes/build/
+/.classpath
+/.settings
+/.project
