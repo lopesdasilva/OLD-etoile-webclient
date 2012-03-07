@@ -324,7 +324,7 @@ public class userManager implements Serializable {
         System.out.println("DEBUG: URL Address: " + urlAdress);
 
         for (Question q : selectedTest.getQuestions()) {
-            if (q.isOpenQuestion()) {
+            
                 if (q.getId() == qID) {
                     try {
                         manager.userService().addURL(urlName, urlAdress,q.getQuestionType(),q.getId());
@@ -333,7 +333,7 @@ public class userManager implements Serializable {
                     } catch (SQLException ex) {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "New URL submission failed"));
 
-                    }
+                    
                 }
             }
 
