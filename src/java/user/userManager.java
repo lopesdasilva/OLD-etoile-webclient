@@ -306,6 +306,7 @@ public class userManager implements Serializable {
                             for (String s : q.getUserAnswers()) {
                                 System.out.println("DEBUG: Answer: " + s);
                             }
+                            manager.userService().updateMultipleChoiceAnswer(q.getId(), q.getUserAnswers());
                             break;
                         case ONE_CHOICE:
                                 manager.userService().updateOneChoiceAnswer(q.getAnswerId(), q.getUserAnswer());
