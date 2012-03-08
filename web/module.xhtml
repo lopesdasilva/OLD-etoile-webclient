@@ -88,20 +88,23 @@
 
 
                                                         <p:column> 
+
                                                             <h:form>
-                                                                
                                                                 <p:selectOneRadio id="OneChoice" value="#{q.userAnswer}"  layout="pageDirection" rendered="#{q.isOneChoice}" >  
                                                                     <p:ajax event="change"/>
                                                                     <f:selectItems value="#{q.possibleAnswers}"/>  
-                                                                    
+
                                                                 </p:selectOneRadio>
                                                             </h:form>
                                                         </p:column>
                                                         <p:column>
-                                                            <p:selectManyCheckbox id="MultipleChoice" value="#{userManager.respostas}"  layout="pageDirection" rendered="#{q.isMultipleChoice}">
-                                                                <p:ajax event="change"/>
-                                                                <f:selectItems value="#{q.possibleAnswers}"/>  
-                                                            </p:selectManyCheckbox>
+                                                            <h:form>
+                                                                <p:selectManyCheckbox id="MultipleChoice" 
+                                                                                      layout="pageDirection" value="#{q.userAnswers}" rendered="#{q.isMultipleChoice}">
+                                                                    <p:ajax event="change"/>
+                                                                    <f:selectItems value="#{q.possibleAnswers}"/>  
+                                                                </p:selectManyCheckbox>
+                                                            </h:form>
                                                         </p:column>
 
 

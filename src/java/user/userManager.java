@@ -279,12 +279,8 @@ public class userManager implements Serializable {
 
 
         
+       
         
-        respostas.add("Router");
-        respostas.add("Bridge");
-        for (String s : respostas) {
-                                System.out.println("DEBUG: Answer: " + s);
-                            }
     }
 
     public void saveTest(ActionEvent actionEvent) {
@@ -307,7 +303,7 @@ public class userManager implements Serializable {
                             System.out.println("DEBUG: Question: " + q.getText());
                             System.out.println("DEBUG: Question: " + q.getText());
                             System.out.println("DEBUG: Selected Answers:");
-                            for (String s : respostas) {
+                            for (String s : q.getUserAnswers()) {
                                 System.out.println("DEBUG: Answer: " + s);
                             }
                             break;
