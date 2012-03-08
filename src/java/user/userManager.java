@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -43,6 +44,15 @@ public class userManager implements Serializable {
     private String text;
     private String urlName;
     private String urlAdress;
+    private LinkedList<String> respostas = new LinkedList<String>();
+
+    public LinkedList<String> getRespostas() {
+        return respostas;
+    }
+
+    public void setRespostas(LinkedList<String> respostas) {
+        this.respostas = respostas;
+    }
 
     public String getUrlAdress() {
         return urlAdress;
@@ -142,26 +152,18 @@ public class userManager implements Serializable {
     }
 
     public String checkValidUser() {
+        System.out.println("DEBUG: USER: " + username + " TRYING TO LOGIN");
         try {
             manager = new ServiceManager();
 
             if (manager.setAuthentication(username, sha1.parseSHA1Password(password))) {
                 current_user = manager.getCurrent_student();
 
-                //TODO:REMOVE
-                System.out.println("***************Name:" + current_user.firstname);
-
                 manager.userService().updateCourses(current_user.getId());
 
-
-                //TODO:REMOVE
-                System.out.println("***************Name:" + current_user.courses.getFirst().getName());
-
-
-
-                //TODO replace arg with List
-
                 this.menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
+
+                System.out.println("DEBUG: USER: " + username + " SUCCESS");
                 return "success";
             }
 
@@ -177,7 +179,7 @@ public class userManager implements Serializable {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Wrong User or Password"));
-
+        System.out.println("DEBUG: USER: " + username + " FAIL");
         return "fail";
 
     }
@@ -185,7 +187,7 @@ public class userManager implements Serializable {
     public String logOff() {
         //TODO: Propper logout
         try {
-            System.out.println("Logoff");
+            System.out.println("DEBUG: Redirecting to Logoff");
             manager.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -195,23 +197,23 @@ public class userManager implements Serializable {
     }
 
     public String redirectAccount() {
-        System.out.println("Account");
+        System.out.println("DEBUG: Redirecting to Account");
         return "account";
 
     }
 
     public String redirectProfile() {
-        System.out.println("Profile");
+        System.out.println("DEBUG: Redirecting to Profile");
         return "profile";
     }
 
     public String redirectDiscussionForum() {
-        System.out.println("Forum");
+        System.out.println("DEBUG: Redirecting to Forum");
         return "forum";
     }
 
     public String redirectAnnouncements() {
-        System.out.println("Announcements");
+        System.out.println("DEBUG: Redirecting to Announcements");
         return "announcements";
     }
 
@@ -219,21 +221,22 @@ public class userManager implements Serializable {
         Object obj = event.getSource();
         MenuItem aux_info = (MenuItem) obj;
         Submenu aux_discipline = (Submenu) aux_info.getParent();
-        System.out.println("PRESSSSSSED " + aux_info.getValue() + "FROM:" + aux_discipline.getLabel());
         selectedDiscipline = manager.userService().getDiscipline(aux_discipline.getLabel());
+        System.out.println("DEBUG: SELECTED DISCIPLINE: " + selectedDiscipline.name + " ID: " + selectedDiscipline.getId());
+
     }
 
     public void redirectAnnouncements(ActionEvent event) {
         Object obj = event.getSource();
         MenuItem aux_info = (MenuItem) obj;
         Submenu aux_discipline = (Submenu) aux_info.getParent();
-        System.out.println("PRESSSSSSED " + aux_info.getValue() + "FROM:" + aux_discipline.getLabel());
         selectedDiscipline = manager.userService().getDiscipline(aux_discipline.getLabel());
-        System.out.println("Selected Discipline: " + selectedDiscipline.getName() + " id" + selectedDiscipline.getId());
+        System.out.println("DEBUG: SELECTED DISCIPLINE: " + selectedDiscipline.name + " ID: " + selectedDiscipline.getId());
+
     }
 
     public String redirectModule() {
-        System.out.println("Module");
+        System.out.println("DEBUG: Redirecting to Module");
         return "module";
 
     }
@@ -243,13 +246,15 @@ public class userManager implements Serializable {
             Object obj = event.getSource();
             MenuItem aux_info = (MenuItem) obj;
             Submenu aux_discipline = (Submenu) aux_info.getParent();
-            System.out.println("PRESSSSSSED " + aux_info.getValue() + "FROM:" + aux_discipline.getLabel());
+
             selectedDiscipline = manager.userService().getDiscipline(aux_discipline.getLabel());
             selectedModule = manager.userService().getModule(aux_info.getValue());
             manager.userService().updateTests(selectedModule);
         } catch (SQLException ex) {
             Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("DEBUG: SELECTED DISCIPLINE: " + selectedDiscipline.name + " ID: " + selectedDiscipline.getId());
+        System.out.println("DEBUG: SELECTED MODULE: " + selectedModule.name + " ID: " + selectedModule.getId());
 
     }
 
@@ -257,7 +262,7 @@ public class userManager implements Serializable {
         Object obj = actionEvent.getSource();
         CommandButton cb = (CommandButton) obj;
 
-        System.out.println("DEBUG: TEST ID: " + cb.getLabel());
+
         for (Test t : selectedModule.getTests()) {
             if (t.getId() == Integer.parseInt(cb.getLabel())) {
                 try {
@@ -269,10 +274,17 @@ public class userManager implements Serializable {
                 }
             }
         }
+        System.out.println("DEBUG: SELECTED TEST: " + selectedTest.name + " ID: " + selectedTest.getId());
+        System.out.println("DEBUG: SELECTED TEST AUTHOR: " + selectedTest.author);
 
-        System.out.println(selectedTest.author);
-        System.out.println(selectedTest.name);
 
+        
+        
+        respostas.add("Router");
+        respostas.add("Bridge");
+        for (String s : respostas) {
+                                System.out.println("DEBUG: Answer: " + s);
+                            }
     }
 
     public void saveTest(ActionEvent actionEvent) {
@@ -281,25 +293,46 @@ public class userManager implements Serializable {
 //            selectedTest.id;
         Object obj = actionEvent.getSource();
         CommandButton cb = (CommandButton) obj;
-        System.out.println("DEBUG: Question ID: " + cb.getLabel());
-        int qID = Integer.parseInt(cb.getLabel());
-        for (Question q : selectedTest.getQuestions()) {
-            if (q.isOpenQuestion()) {
-                if (q.getId() == qID) {
-                    try {
-                        manager.userService().updateOpenAnswer(q.getAnswerId(), q.getUserAnswer());
 
-                        System.out.println("text: " + text);
-                        System.out.println("Question: " + q.getText());
-                        System.out.println("Answer: " + q.getUserAnswer());
-                    } //
-                    catch (SQLException ex) {
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "Answer not saved."));
+        int qNumber = Integer.parseInt(cb.getLabel());
+
+
+
+        for (Question q : selectedTest.getQuestions()) {
+
+            if (q.getNumber() == qNumber) {
+                try {
+                    switch (q.getQuestionType()) {
+                        case MULTIPLE_CHOICE:
+                            System.out.println("DEBUG: Question: " + q.getText());
+                            System.out.println("DEBUG: Question: " + q.getText());
+                            System.out.println("DEBUG: Selected Answers:");
+                            for (String s : respostas) {
+                                System.out.println("DEBUG: Answer: " + s);
+                            }
+                            break;
+                        case ONE_CHOICE:
+                                manager.userService().updateOneChoiceAnswer(q.getAnswerId(), q.getUserAnswer());
+                            System.out.println("DEBUG:  Question: " + q.getText());
+                            System.out.println("Question: " + q.getText());
+                            System.out.println("Answer: " + q.getUserAnswer());
+                            break;
+                        case OPEN:
+                            manager.userService().updateOpenAnswer(q.getAnswerId(), q.getUserAnswer());
+                            System.out.println("DEBUG:  Question: " + q.getText());
+                            System.out.println("Question: " + q.getText());
+                            System.out.println("Answer: " + q.getUserAnswer());
+                            break;
                     }
+
+
+                } catch (SQLException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "Answer not saved."));
                 }
             }
-//            
         }
+//            
+
 
 //        manager.userService().updateOpenAnswer(, userAnswer);
 
@@ -316,26 +349,28 @@ public class userManager implements Serializable {
         Object obj = actionEvent.getSource();
         CommandButton cb = (CommandButton) obj;
 
-        int qID = Integer.parseInt(cb.getLabel());
+        int qNumber = Integer.parseInt(cb.getLabel());
         System.out.println("DEBUG: Submit URL");
         System.out.println("DEBUG: Username: " + username);
-        System.out.println("DEBUG: Question ID: " + qID);
+        System.out.println("DEBUG: Question Number: " + qNumber);
         System.out.println("DEBUG: URL Name: " + urlName);
         System.out.println("DEBUG: URL Address: " + urlAdress);
-
+        Question selectedQuestion = null;
         for (Question q : selectedTest.getQuestions()) {
-            
-                if (q.getId() == qID) {
-                    try {
-                        manager.userService().addURL(urlName, urlAdress,q.getQuestionType(),q.getId());
-                        urlName = "";
-                        urlAdress = "";
-                    } catch (SQLException ex) {
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "New URL submission failed"));
 
-                    
-                }
+            if (q.getNumber() == qNumber) {
+                selectedQuestion = q;
+                break;
             }
+
+        }
+        try {
+            System.out.println(selectedQuestion.getQuestionType() + "");
+            manager.userService().addURL(urlName, urlAdress, selectedQuestion.getQuestionType(), selectedQuestion.getId());
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "New URL submission failed"));
+
 
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "New URL submitted"));

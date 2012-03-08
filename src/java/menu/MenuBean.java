@@ -26,8 +26,6 @@ public class MenuBean implements Serializable {
         model = new DefaultMenuModel();
         //First submenu 
         MenuItem item;
-        System.out.println("****Creating the menu");
-
 
 
 
@@ -37,7 +35,7 @@ public class MenuBean implements Serializable {
             submenu.setLabel(d.getName());
 
             item = new MenuItem();
-            item.setValue("News");
+            item.setValue("News & Resources");
             //item.setId(d.getId()+"");
             item.setAjax(false);            
             item.setActionListener(createActionListener("#{userManager.redirectAnnouncements}"));

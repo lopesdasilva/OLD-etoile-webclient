@@ -16,7 +16,7 @@
                         <h:outputLabel value=">"/>
                         <p:commandLink value="#{userManager.selectedDiscipline.name}" disabled="true"/>
                         <h:outputLabel value=">"/>
-                        <p:commandLink value="News" disabled="true"/>
+                        <p:commandLink value="News and Resources" disabled="true"/>
                     </h:panelGrid>
 
                     <h:panelGrid columns="3" styleClass="userbar">
@@ -28,6 +28,21 @@
             </ui:define>
 
             <ui:define name="content">
+                
+                 <p:fieldset legend="Description">
+                    <p:accordionPanel   >
+                        <p:tab  style="max-width: 300px" >
+                            
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:fieldset>
+                 <p:fieldset legend="Resources">
+                    <p:accordionPanel   >
+                        <p:tab  style="max-width: 300px" >
+                            
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:fieldset>
                 <p:fieldset legend="News">
                     <p:accordionPanel   >
                         <p:tab  style="max-width: 300px" >

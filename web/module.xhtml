@@ -67,7 +67,7 @@
                                             <p:column>
 
 
-                                                <p:commandButton value="save" actionListener="#{userManager.saveTest}" label="#{q.id}"/>
+                                                <p:commandButton value="save" actionListener="#{userManager.saveTest}" label="#{q.number}"/>
 
 
 
@@ -88,13 +88,18 @@
 
 
                                                         <p:column> 
-                                                            <p:selectOneRadio id="OneChoice"  layout="pageDirection" rendered="#{q.isOneChoice}" >  
-                                                                <f:selectItems value="#{q.possibleAnswers}"/>  
-
-                                                            </p:selectOneRadio>
+                                                            <h:form>
+                                                                
+                                                                <p:selectOneRadio id="OneChoice" value="#{q.userAnswer}"  layout="pageDirection" rendered="#{q.isOneChoice}" >  
+                                                                    <p:ajax event="change"/>
+                                                                    <f:selectItems value="#{q.possibleAnswers}"/>  
+                                                                    
+                                                                </p:selectOneRadio>
+                                                            </h:form>
                                                         </p:column>
                                                         <p:column>
-                                                            <p:selectManyCheckbox id="MultipleChoice" layout="pageDirection" rendered="#{q.isMultipleChoice}">
+                                                            <p:selectManyCheckbox id="MultipleChoice" value="#{userManager.respostas}"  layout="pageDirection" rendered="#{q.isMultipleChoice}">
+                                                                <p:ajax event="change"/>
                                                                 <f:selectItems value="#{q.possibleAnswers}"/>  
                                                             </p:selectManyCheckbox>
                                                         </p:column>
@@ -107,7 +112,7 @@
                                                         <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
-                                                                <p:dataList value="#{q.URLS}" var="url" style="border-color: inactiveborder">
+                                                                <p:dataList id="urls" value="#{q.URLS}" var="url" style="border-color: inactiveborder">
                                                                     <a href="http://#{url.name}" target="_blank">#{url.url}</a>
 
                                                                 </p:dataList>
@@ -121,16 +126,17 @@
                                                                 <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                                     <h:form>
                                                                         <h:outputText value="URL Name: "/>
-                                                                        <p:inputText id ="urlName" label="urlName" value="#{userManager.urlName}">
+                                                                        <p:inputText id ="urlName" value="#{userManager.urlName}" required="true" label="Url Name" requiredMessage="A Url Name is required."  >
                                                                             <p:ajax event="keyup"/>
                                                                         </p:inputText>
+                                                                        <br></br>
                                                                         <h:outputText  value="URL: "/>
-                                                                        <p:inputText id="urlAddress" label="urlAddress" value="#{userManager.urlAdress}">
+                                                                        <p:inputText id="urlAddress" value="#{userManager.urlAdress}" required="true" label="Url Address" requiredMessage="A Url Address is required."  >
                                                                             <p:ajax event="keyup"/>
                                                                         </p:inputText>
                                                                     </h:form>
                                                                 </p:panelGrid>
-                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}" label="#{q.id}" />
+                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}" label="#{q.number}"  />
 
 
 
@@ -144,7 +150,7 @@
                                         </p:tab>
                                     </p:tabView>
                                     <!--    TODO:usar o rendered para controlar quais é que deve mostrar-->
-                                    <p:spacer width="630" height="10" />
+                                    <p:spacer width="600" height="10" />
                                     <p:commandButton value="Next" type="button" />
                                     <p:commandButton value="Previous" type="button" />
                                 </p:dialog>  
