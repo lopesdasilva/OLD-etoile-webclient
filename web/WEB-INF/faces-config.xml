@@ -94,6 +94,10 @@
             <to-view-id>/index.xhtml</to-view-id>            
         </navigation-case>
         <navigation-case>
+            <from-outcome>results</from-outcome>
+            <to-view-id>/resultTest.xhtml</to-view-id>           
+        </navigation-case>
+        <navigation-case>
             <from-outcome>module</from-outcome>
             <to-view-id>/module.xhtml</to-view-id>            
         </navigation-case>   
@@ -126,7 +130,7 @@
         </navigation-case>
     </navigation-rule>
     <context-param>  
-    <param-name>primefaces.THEME</param-name>  
-    <param-value>cupertino</param-value>  
-</context-param> 
+        <param-name>primefaces.THEME</param-name>  
+        <param-value>cupertino</param-value>  
+    </context-param> 
 </faces-config>

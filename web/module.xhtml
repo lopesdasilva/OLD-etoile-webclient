@@ -53,6 +53,7 @@
                                 <p:column>
 
                                     <p:commandButton icon="ui-icon ui-icon-pencil"  update="dlgTest" value="Answer test"  oncomplete="dlgTest.show();" actionListener="#{userManager.answerTest}"   label="#{test.id}"/>
+                                    <p:commandButton value="Check Results"  label="#{test.id}" actionListener="#{userManager.checkResults}" action="#{userManager.redirectResults}" ajax="false"/>
                                 </p:column>
                                 <!--Falta arranjar o Layout-->
                                 <p:dialog id="dlgTest" header="#{userManager.selectedTest.name} Test" widgetVar="dlgTest" dynamic="true" cache="false" modal="true" height="500" width="800" draggable="false" resizable="false"  appendToBody="true" > 

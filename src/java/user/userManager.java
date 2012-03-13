@@ -278,9 +278,9 @@ public class userManager implements Serializable {
         System.out.println("DEBUG: SELECTED TEST AUTHOR: " + selectedTest.author);
 
 
-        
-       
-        
+
+
+
     }
 
     public void saveTest(ActionEvent actionEvent) {
@@ -309,7 +309,7 @@ public class userManager implements Serializable {
                             manager.userService().updateMultipleChoiceAnswer(q.getId(), q.getUserAnswers());
                             break;
                         case ONE_CHOICE:
-                                manager.userService().updateOneChoiceAnswer(q.getAnswerId(), q.getUserAnswer());
+                            manager.userService().updateOneChoiceAnswer(q.getAnswerId(), q.getUserAnswer());
                             System.out.println("DEBUG:  Question: " + q.getText());
                             System.out.println("Question: " + q.getText());
                             System.out.println("Answer: " + q.getUserAnswer());
@@ -380,5 +380,33 @@ public class userManager implements Serializable {
         System.out.println("Title: " + event.getTab().getTitle());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tab Changed", "Active Tab: " + event.getTab().getId()));
 
+    }
+
+    public void checkResults(ActionEvent actionEvent) {
+        System.out.println("DEBUG: Check Results");
+        Object obj = actionEvent.getSource();
+        CommandButton cb = (CommandButton) obj;
+
+
+        for (Test t : selectedModule.getTests()) {
+            if (t.getId() == Integer.parseInt(cb.getLabel())) {
+                try {
+                    this.selectedTest = t;
+                    selectedTest.setQuestions(new LinkedList<Question>());
+                    manager.userService().updateQuestions(selectedTest);
+                } catch (SQLException ex) {
+                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        System.out.println("DEBUG: SELECTED TEST: " + selectedTest.name + " ID: " + selectedTest.getId());
+        System.out.println("DEBUG: SELECTED TEST AUTHOR: " + selectedTest.author);
+
+
+    }
+
+    public String redirectResults() {
+        System.out.println("DEBUG: Redirecting to results");
+        return "results";
     }
 }

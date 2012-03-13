@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./resources/templates/disciplineTemplate.xhtml">
+
+            <ui:define name="toptop">
+                toptop
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:dataTable id="questions" var="q" value="#{userManager.selectedTest.questions}">
+                        <p:column id="user">
+                            <f:facet name="header">
+                              Username
+                            </f:facet>
+                            <h:outputText value="#{userManager.username}" />
+                        </p:column>
+
+                        <p:column id="questionsHeader"> 
+                            <f:facet name="header">  
+                                Question  
+                            </f:facet>  
+                            <h:outputText value="#{q.text}" />  
+                        </p:column>  
+                        <p:column id="answerHeader"> 
+                            <f:facet name="header">  
+                                Answer
+                            </f:facet>
+
+                            <h:outputText value="#{q.userAnswer}" rendered="#{q.openQuestion}"/>  
+                            <h:outputText value="#{q.userAnswer}" rendered="#{q.oneChoiceQuestion}"/>
+
+                            <h:outputText value="#{q.userAnswersString}" rendered="#{q.multipleChoiceQuestion}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                    <br></br>
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/images/pdf.png" />  
+                        <p:dataExporter type="pdf" target="questions" fileName="questions"/>  
+                    </h:commandLink>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -7,6 +7,12 @@
     position:relative;
 }
 
+.dataList .ui-datalist-data{
+border: none;
+background: transparent;
+background-image: none;
+}
+
 .userbar{
     position: absolute;
     right:5px;
