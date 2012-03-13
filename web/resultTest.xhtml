@@ -45,7 +45,7 @@
                     <br></br>
                     <h:commandLink>  
                         <p:graphicImage value="resources/images/pdf.png" />  
-                        <p:dataExporter type="pdf" target="questions" fileName="questions"/>  
+                        <p:dataExporter type="pdf" target="questions" fileName="#{userManager.username} #{userManager.selectedTest.name}"/>  
                     </h:commandLink>
                 </h:form>
             </ui:define>
