@@ -60,59 +60,60 @@
 
 
                                     <h:outputText value="Please answer the following questions:" style="font-weight: bold"/>
-                                    <p:spacer width="490" height="10" />
 
-                                    <p:tabView value="#{userManager.selectedTest.questions}" var="q" dynamic="true" cache="false" >
+                                    <p:commandButton value="Next" type="button" />
+                                    <p:commandButton value="Previous" type="button" />
+                                    <p:tabView value="#{userManager.selectedTest.questions}" var="q" dynamic="true" cache="false" style="width: 750px" >
                                         <p:tab title="#{q.number}">
 
                                             <p:column>
 
 
                                                 <p:commandButton value="save" actionListener="#{userManager.saveTest}" label="#{q.number}"/>
-
-
-
-                                                <p:accordionPanel multiple="true">
-
-                                                    <p:tab title="Question">
-
-
-                                                        <h:outputText value="Question #{q.number} - #{q.text}" style="font-weight: bold"/>
-
-                                                        <br></br>
-
-                                                        <h:form>
-                                                            <p:inputTextarea id="Open" value="#{q.userAnswer}" rendered="#{q.isOpen}" >
-                                                                <p:ajax event="keyup"/>
-                                                            </p:inputTextarea>
-                                                        </h:form>
-
-
-                                                        <p:column> 
-
-                                                            <h:form>
-                                                                <p:selectOneRadio id="OneChoice" value="#{q.userAnswer}"  layout="pageDirection" rendered="#{q.isOneChoice}" >  
-                                                                    <p:ajax event="change"/>
-                                                                    <f:selectItems value="#{q.possibleAnswers}"/>  
-
-                                                                </p:selectOneRadio>
-                                                            </h:form>
-                                                        </p:column>
-                                                        <p:column>
-                                                            <h:form>
-                                                                <p:selectManyCheckbox id="MultipleChoice" 
-                                                                                      layout="pageDirection" value="#{q.userAnswers}" rendered="#{q.isMultipleChoice}">
-                                                                    <p:ajax event="change"/>
-                                                                    <f:selectItems value="#{q.possibleAnswers}"/>  
-                                                                </p:selectManyCheckbox>
-                                                            </h:form>
-                                                        </p:column>
+                                                <br/>
 
 
 
 
-                                                    </p:tab>
-                                                    <p:tab id="URL" title="URL">
+
+                                                <h:outputText value="Question #{q.number} - #{q.text}" style="font-weight: bold"/>
+
+                                                <br/><br/>
+
+                                                <h:form>
+                                                    <p:inputTextarea id="Open" value="#{q.userAnswer}" rendered="#{q.isOpen}" cols="100" >
+                                                        <p:ajax event="keyup"/>
+                                                    </p:inputTextarea>
+                                                </h:form>
+
+
+                                                <p:column> 
+
+                                                    <h:form>
+                                                        <p:selectOneRadio id="OneChoice" value="#{q.userAnswer}"  layout="pageDirection" rendered="#{q.isOneChoice}" >  
+                                                            <p:ajax event="change"/>
+                                                            <f:selectItems value="#{q.possibleAnswers}"/>  
+
+                                                        </p:selectOneRadio>
+                                                    </h:form>
+                                                </p:column>
+                                                <p:column>
+                                                    <h:form>
+                                                        <p:selectManyCheckbox id="MultipleChoice" 
+                                                                              layout="pageDirection" value="#{q.userAnswers}" rendered="#{q.isMultipleChoice}">
+                                                            <p:ajax event="change"/>
+                                                            <f:selectItems value="#{q.possibleAnswers}"/>  
+                                                        </p:selectManyCheckbox>
+                                                    </h:form>
+                                                </p:column>
+
+
+                                                <br/>
+                                                <p:accordionPanel multiple="true" activeIndex="2">
+
+
+
+                                                    <p:tab id="URL" title="URL"  >
                                                         <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
@@ -127,13 +128,13 @@
                                                                 <p></p>
 
 
-                                                                <p:panelGrid columns="2" style="border-color: inactiveborder">
+                                                                <p:panelGrid columns="2" style="border-color: white">
+                                                                    
                                                                     <h:form>
                                                                         <h:outputText value="URL Name: "/>
                                                                         <p:inputText id ="urlName" value="#{userManager.urlName}" required="true" label="Url Name" requiredMessage="A Url Name is required."  >
                                                                             <p:ajax event="keyup"/>
                                                                         </p:inputText>
-                                                                        <br></br>
                                                                         <h:outputText  value="URL: "/>
                                                                         <p:inputText id="urlAddress" value="#{userManager.urlAdress}" required="true" label="Url Address" requiredMessage="A Url Address is required."  >
                                                                             <p:ajax event="keyup"/>
@@ -155,8 +156,7 @@
                                     </p:tabView>
                                     <!--    TODO:usar o rendered para controlar quais é que deve mostrar-->
                                     <p:spacer width="600" height="10" />
-                                    <p:commandButton value="Next" type="button" />
-                                    <p:commandButton value="Previous" type="button" />
+
                                 </p:dialog>  
 
                             </p:tab>
