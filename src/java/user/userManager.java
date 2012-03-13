@@ -9,8 +9,9 @@ import etoile.javaapi.question.Question;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -45,7 +46,21 @@ public class userManager implements Serializable {
     private String urlName;
     private String urlAdress;
     private LinkedList<String> respostas = new LinkedList<String>();
+    private String todayDate="HOJE";
 
+    public String getTodayDate() {
+        Date d= new Date();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("hhmm-dd-mm-yyyy");
+       todayDate=sdf1.format(d).toString();
+        return  todayDate;
+    }
+
+    public void setTodayDate(String todayDate) {
+        this.todayDate = todayDate;
+    }
+
+
+    
     public LinkedList<String> getRespostas() {
         return respostas;
     }

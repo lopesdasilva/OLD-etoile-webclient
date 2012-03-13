@@ -11,7 +11,21 @@
         <ui:composition template="./resources/templates/disciplineTemplate.xhtml">
 
             <ui:define name="toptop">
-                toptop
+                <h:form>
+                    <h:panelGrid columns="5" styleClass="breadcrums" >
+                        <p:commandLink value="Profile" ajax="false" action="#{userManager.redirectProfile()}" />
+                        <h:outputLabel value=">"/>
+                        <p:commandLink value="#{userManager.selectedDiscipline.name}" action="#{userManager.redirectAnnouncements()}" ajax="false"/>
+                        <h:outputLabel value=">"/>
+                        <p:commandLink value="#{userManager.selectedModule.name}" disabled="true"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="3" styleClass="userbar">
+                        <p:commandLink value="Account" ajax="false" action="#{userManager.redirectAccount()}" />
+                        <h:outputLabel value="|"/>
+                        <p:commandLink value="Logoff" ajax="false" action="#{userManager.logOff()}"/>
+                    </h:panelGrid>
+                </h:form>
             </ui:define>
 
             <ui:define name="content">
@@ -40,12 +54,13 @@
 
                             <h:outputText value="#{q.userAnswersString}" rendered="#{q.multipleChoiceQuestion}"/>
                         </p:column>
-
+                        
                     </p:dataTable>
                     <br></br>
-                    <h:commandLink>  
+                    <h:commandLink value="#{userManager.username}_#{userManager.selectedTest.name}(#{userManager.todayDate})">
                         <p:graphicImage value="resources/images/pdf.png" />  
-                        <p:dataExporter type="pdf" target="questions" fileName="#{userManager.username} #{userManager.selectedTest.name}"/>  
+                        
+                        <p:dataExporter type="pdf" target="questions" fileName="#{userManager.username}_#{userManager.selectedTest.name}(#{userManager.todayDate})"/>  
                     </h:commandLink>
                 </h:form>
             </ui:define>
