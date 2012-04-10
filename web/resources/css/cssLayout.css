@@ -7,10 +7,8 @@
     position:relative;
 }
 
-.dataList .ui-datalist-data{
-border: none;
-background: transparent;
-background-image: none;
+.ui-panelgrid tr, .ui-panelgrid td {
+border:0 !important;
 }
 
 .userbar{
