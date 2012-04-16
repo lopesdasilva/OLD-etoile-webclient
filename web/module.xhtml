@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <body>
 
@@ -118,9 +119,16 @@
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
                                                                 <p:dataList id="urls" value="#{q.URLS}" var="url" style="border-color: inactiveborder">
+                                                                    <p:panelGrid columns="2">
                                                                     <a href="http://#{url.name}" target="_blank">#{url.url}</a>
-
+                                                                    <p:column>
+                                                                    <p:inplace label="Vote" >
+                                                                    <p:rating stars="5" />
+                                                                    </p:inplace>
+                                                                        </p:column>
+                                                                    </p:panelGrid>  
                                                                 </p:dataList>
+                                                             
                                                             </p:column>
                                                             <p:column>
 
@@ -141,9 +149,9 @@
                                                                         </p:inputText>
                                                                     </h:form>
                                                                 </p:panelGrid>
-                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}" label="#{q.number}"  />
+                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}" label="#{q.number}" update="URL"  />
 
-
+                                   
 
 
                                                             </p:column>

@@ -6,6 +6,7 @@ package user;
 
 import etoile.javaapi.*;
 import etoile.javaapi.question.Question;
+import etoile.javaapi.question.URL;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -47,7 +48,18 @@ public class userManager implements Serializable {
     private String urlAdress;
     private LinkedList<String> respostas = new LinkedList<String>();
     private String todayDate="HOJE";
+    private Test selectesavedTest;
 
+    public Test getSelectesavedTest() {
+        return selectesavedTest;
+    }
+
+    public void setSelectesavedTest(Test selectesavedTest) {
+        this.selectesavedTest = selectesavedTest;
+    }
+
+    
+    
     public String getTodayDate() {
         Date d= new Date();
         SimpleDateFormat sdf1 = new SimpleDateFormat("hhmm-dd-mm-yyyy");
@@ -324,13 +336,13 @@ public class userManager implements Serializable {
                             manager.userService().updateMultipleChoiceAnswer(q.getId(), q.getUserAnswers());
                             break;
                         case ONE_CHOICE:
-                            manager.userService().updateOneChoiceAnswer(q.getAnswerId(), q.getUserAnswer());
+                            manager.userService().updateOneChoiceAnswer(q.getId(), q.getUserAnswer());
                             System.out.println("DEBUG:  Question: " + q.getText());
                             System.out.println("Question: " + q.getText());
                             System.out.println("Answer: " + q.getUserAnswer());
                             break;
                         case OPEN:
-                            manager.userService().updateOpenAnswer(q.getAnswerId(), q.getUserAnswer());
+                            manager.userService().updateOpenAnswer(q.getId(), q.getUserAnswer());
                             System.out.println("DEBUG:  Question: " + q.getText());
                             System.out.println("Question: " + q.getText());
                             System.out.println("Answer: " + q.getUserAnswer());
@@ -378,7 +390,7 @@ public class userManager implements Serializable {
         }
         try {
             System.out.println(selectedQuestion.getQuestionType() + "");
-            manager.userService().addURL(urlName, urlAdress, selectedQuestion.getQuestionType(), selectedQuestion.getId());
+            manager.userService().addURL(urlName, urlAdress, selectedQuestion.getQuestionType(), selectedQuestion);
 
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "New URL submission failed"));
@@ -406,7 +418,7 @@ public class userManager implements Serializable {
         for (Test t : selectedModule.getTests()) {
             if (t.getId() == Integer.parseInt(cb.getLabel())) {
                 try {
-                    this.selectedTest = t;
+                    this.selectesavedTest = t;
                     selectedTest.setQuestions(new LinkedList<Question>());
                     manager.userService().updateQuestions(selectedTest);
                 } catch (SQLException ex) {
@@ -424,4 +436,10 @@ public class userManager implements Serializable {
         System.out.println("DEBUG: Redirecting to results");
         return "results";
     }
+    
+    
+    public void add(){
+        respostas.add("UM");
+    }
+    
 }
