@@ -49,6 +49,8 @@
                                     <h:outputText value="#{test.beginDate.toString()}"/>
                                     <h:outputText value="End date:" style="font-weight: bold"/>
                                     <h:outputText value="#{test.endDate.toString()}"/>
+                                    
+                                    <a href="#{test.url}" target="_blank">Extra Content</a>
                                 </h:panelGrid>
 
                                 <p:column>
@@ -122,9 +124,7 @@
                                                                     <p:panelGrid columns="2">
                                                                     <a href="http://#{url.name}" target="_blank">#{url.url}</a>
                                                                     <p:column>
-                                                                    <p:inplace label="Vote" >
-                                                                    <p:rating stars="5" />
-                                                                    </p:inplace>
+                                                                    
                                                                         </p:column>
                                                                     </p:panelGrid>  
                                                                 </p:dataList>
