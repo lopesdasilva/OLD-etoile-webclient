@@ -47,7 +47,7 @@ public class userManager implements Serializable {
     private String urlName;
     private String urlAdress;
     private LinkedList<String> respostas = new LinkedList<String>();
-    private String todayDate="HOJE";
+    private String todayDate = "HOJE";
     private Test selectesavedTest;
 
     public Test getSelectesavedTest() {
@@ -58,21 +58,17 @@ public class userManager implements Serializable {
         this.selectesavedTest = selectesavedTest;
     }
 
-    
-    
     public String getTodayDate() {
-        Date d= new Date();
+        Date d = new Date();
         SimpleDateFormat sdf1 = new SimpleDateFormat("hhmm-dd-mm-yyyy");
-       todayDate=sdf1.format(d).toString();
-        return  todayDate;
+        todayDate = sdf1.format(d).toString();
+        return todayDate;
     }
 
     public void setTodayDate(String todayDate) {
         this.todayDate = todayDate;
     }
 
-
-    
     public LinkedList<String> getRespostas() {
         return respostas;
     }
@@ -366,7 +362,7 @@ public class userManager implements Serializable {
 
     }
 
-    public void submitURL(ActionEvent actionEvent) {
+    public int submitURL(ActionEvent actionEvent) {
 
 
 
@@ -388,6 +384,14 @@ public class userManager implements Serializable {
             }
 
         }
+
+        for (URL url : selectedQuestion.getURLS()) {
+            if (url.getName().equals(urlName)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "URL already exists"));
+                return 0;
+            }
+        }
+
         try {
             System.out.println(selectedQuestion.getQuestionType() + "");
             manager.userService().addURL(urlName, urlAdress, selectedQuestion.getQuestionType(), selectedQuestion);
@@ -398,7 +402,7 @@ public class userManager implements Serializable {
 
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "New URL submitted"));
-
+        return 1;
     }
     //NOT WORKING
 
@@ -436,10 +440,8 @@ public class userManager implements Serializable {
         System.out.println("DEBUG: Redirecting to results");
         return "results";
     }
-    
-    
-    public void add(){
+
+    public void add() {
         respostas.add("UM");
     }
-    
 }
