@@ -124,11 +124,16 @@
                                                                     <p:column>
                                                                         <a href="http://#{url.name}" target="_blank">#{url.url}</a>
                                                                         <p:spacer width="10"/>
-                                                                        <p:inplace label="Rate this link" editor="true" >
-                                                                            <h:form>
-                                                                                <p:inputText value="#{url.votes}"></p:inputText>
-                                                                            </h:form>
-                                                                        </p:inplace >
+                                                                       
+                                                                        <h:form>
+                                                                            <p:inplace label="Rate this link" editor="true" >
+                                                                                <h:form>
+                                                                                    <p:rating value="#{url.votes}"></p:rating>
+                                                                                </h:form>
+                                                                            </p:inplace >
+                                                                        </h:form>
+                                                                        
+                                                                        
                                                                     </p:column>
                                                                 </p:dataList>
 
