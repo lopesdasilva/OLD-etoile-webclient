@@ -183,6 +183,7 @@ public class userManager implements Serializable {
                 current_user = manager.getCurrent_student();
 
                 manager.userService().updateCourses(current_user.getId());
+                manager.userService().getNews();
 
                 this.menu = new MenuBean(current_user.getCourses().getFirst().getDisciplines());
 
