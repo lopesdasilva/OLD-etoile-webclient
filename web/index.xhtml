@@ -4,7 +4,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-<!--body-->
+    <!--body-->
     <h:body>
         <ui:composition template="./resources/templates/indexTemplate.xhtml">
 
@@ -29,6 +29,9 @@
                                 </h:panelGrid>
                             </h:panelGrid>
                         </h:panelGrid>
+                        <center>
+                            <h:outputText style="color: #AFAFAF" value="étoile does not support Internet Explorer, please use a different browser"/>
+                        </center>
                     </p:column>
                     <p:growl id="growl"  showDetail="true" autoUpdate="true"/>  
 
