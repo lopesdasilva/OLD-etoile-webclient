@@ -37,23 +37,13 @@
                         
                 <p:fieldset legend="News">
                     Please check the news concerning your courses.
-                    <p:accordionPanel style="width:800px;height:300px;">  
-                        <p:tab title="Social Intelligence course - 21 February, 2012">  
-                            <h:panelGrid columns="1" cellpadding="10">                                
-                                <h:outputText  
-                                    value="Starting of the ASSYST - Social Intelligence course." />  
-                            </h:panelGrid>  
-                        </p:tab>  
-                        <p:tab title="Etoile Platform">  
+                    <p:accordionPanel value ="#{userManager.current_user.news}" var="news_var" style="width:800px;height:300px;">  
+                        <p:tab title="#{news_var.title}">  
                             <h:panelGrid columns="1" cellpadding="10">
-                                <h:outputText   value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                                Proin nec ante tellus. Aenean convallis adipiscing pretium. 
-                                                Sed eu odio eget ligula tempor venenatis. Nulla volutpat porta elit nec malesuada. 
-                                                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-                                                Cras in ipsum quis metus consectetur fermentum eget in odio." />  
+                                <a href="http://#{news_var.url}" target="_blank">Extra Content</a>
+                                <h:outputText value="#{news_var.text}" />  
                             </h:panelGrid>  
-                        </p:tab>  
-                      
+                        </p:tab> 
                     </p:accordionPanel>  
 
                 </p:fieldset>
