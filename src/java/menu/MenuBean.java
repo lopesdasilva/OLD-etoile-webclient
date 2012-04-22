@@ -34,13 +34,13 @@ public class MenuBean implements Serializable {
 
             submenu.setLabel(d.getName());
 
-            item = new MenuItem();
-            item.setValue("News & Resources");
-            //item.setId(d.getId()+"");
-            item.setAjax(false);            
-            item.setActionListener(createActionListener("#{userManager.redirectAnnouncements}"));
-            item.setActionExpression(createAction_old("#{userManager.redirectAnnouncements}", String.class));
-            submenu.getChildren().add(item);
+//            item = new MenuItem();
+//            item.setValue("News & Resources");
+//            //item.setId(d.getId()+"");
+//            item.setAjax(false);            
+//            item.setActionListener(createActionListener("#{userManager.redirectAnnouncements}"));
+//            item.setActionExpression(createAction_old("#{userManager.redirectAnnouncements}", String.class));
+//            submenu.getChildren().add(item);
 
 //            MenuItem item2 = new MenuItem();
 //            item2.setValue("Contents");
