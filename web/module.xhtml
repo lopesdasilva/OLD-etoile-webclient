@@ -22,7 +22,7 @@
                     </h:panelGrid>
 
                     <h:panelGrid columns="3" styleClass="userbar">
-                        <p:commandLink value="Account" ajax="false" action="#{userManager.redirectAccount()}" />
+                        <p:commandLink value="Account" ajax="false"  disabled="true" action="#{userManager.redirectAccount()}" />
                         <h:outputLabel value="|"/>
                         <p:commandLink value="Logoff" ajax="false" action="#{userManager.logOff()}"/>
                     </h:panelGrid>
@@ -30,6 +30,16 @@
             </ui:define>
 
             <ui:define name="content">
+                <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
+
+                <p:dialog modal="true" widgetVar="statusDialog" header="Please wait..."   
+                          resizable="false" draggable="false" closable="false" showHeader="false">  
+                    <center>
+                    <h:outputText value="Loading, please wait..."/>
+                    <br/>
+                    <p:graphicImage value="resources/images/ajaxloadingbar.gif" />
+                    </center>
+                </p:dialog> 
 
                 <h:form>
 
@@ -122,7 +132,7 @@
                                                                     <p:column>
                                                                         <a href="http://#{url.url}" target="_blank">#{url.name}</a>
                                                                         <p:spacer width="10"/>
-                                                                       
+
                                                                         <h:form>
                                                                             <p:inplace label="Rate this link" editor="true" >
                                                                                 <h:form>
@@ -130,8 +140,8 @@
                                                                                 </h:form>
                                                                             </p:inplace >
                                                                         </h:form>
-                                                                        
-                                                                        
+
+
                                                                     </p:column>
                                                                 </p:dataList>
 

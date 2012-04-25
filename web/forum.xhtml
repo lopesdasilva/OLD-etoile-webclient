@@ -15,12 +15,12 @@
                     <h:panelGrid columns="5" styleClass="breadcrums" >
                     <p:commandLink value="Home" ajax="false" action="#{userManager.redirectProfile()}" />
                     <h:outputLabel value=">"/>
-                    <p:commandLink value="#{userManager.selectedDiscipline.name}" action="#{userManager.redirectAnnouncements()}" disabled="true" ajax="false" />
+                    <p:commandLink value="#{userManager.selectedDiscipline.name}" disable="true"  action="#{userManager.redirectAnnouncements()}" disabled="true" ajax="false" />
                       <h:outputLabel value=">"/>
                     <p:commandLink value="Discussion Forum" disabled="true"/>
                     </h:panelGrid>
                     <h:panelGrid columns="3" styleClass="userbar">
-                        <p:commandLink value="Account" ajax="false" action="#{userManager.redirectAccount()}" />
+                        <p:commandLink value="Account" ajax="false"  disabled="true" action="#{userManager.redirectAccount()}" />
                         <h:outputLabel value="|"/>
                         <p:commandLink value="Logoff" ajax="false" action="#{userManager.logOff()}"/>
                     </h:panelGrid>
@@ -40,7 +40,7 @@
             <ui:define name="content">
 
 
-                <p:fieldset legend="#{userManager.selectedDiscipline.name} - Discussion Forum">
+                <p:fieldset legend="#{userManager.selectedDiscipline.name} - Discussion Forum" style="width: 800px">
                     Page not ready. Please return soon.
 
 
