@@ -9,7 +9,14 @@
         <ui:composition template="./resources/templates/indexTemplate.xhtml">
 
             <ui:define name="content">
-
+                <p:dialog modal="true" widgetVar="statusDialog" header="Please wait..."   
+                          resizable="false" draggable="false" closable="false" showHeader="false">  
+                    <center>
+                        <h:outputText value="Loading, please wait..."/>
+                        <br/>
+                        <p:graphicImage value="resources/images/ajaxloadingbar.gif" />
+                    </center>
+                </p:dialog> 
                 <h:form>
                     <p:column>
 
@@ -22,7 +29,7 @@
                                 <p:password value="#{userManager.password}" label="password"  size="25" minLength="6" id="password" feedback="false" />
                                 <br></br>
                                 <h:panelGrid columns="3" >
-                                    <p:commandButton  value="Login" ajax="false" action="#{userManager.checkValidUser}"/>
+                                    <p:commandButton  value="Login"  onclick="statusDialog.show();" ajax="false" action="#{userManager.checkValidUser}"/>
                                     <p:commandButton value="Register" onclick="dlgRegister.show();"/>
                                     <p:commandButton onclick="dlgHelp.show();" icon="ui-icon ui-icon-help"/>
 

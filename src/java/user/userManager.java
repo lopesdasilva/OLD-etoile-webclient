@@ -403,6 +403,8 @@ public class userManager implements Serializable {
 
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "New URL submitted"));
+        urlName="";
+        urlAdress="";
         return 1;
     }
     //NOT WORKING

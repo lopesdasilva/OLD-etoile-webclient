@@ -30,7 +30,7 @@
             </ui:define>
 
             <ui:define name="content">
-                <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
+<!--                <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  -->
 
                 <p:dialog modal="true" widgetVar="statusDialog" header="Please wait..."   
                           resizable="false" draggable="false" closable="false" showHeader="false">  
@@ -63,8 +63,8 @@
 
                                 <p:column>
 
-                                    <p:commandButton icon="ui-icon ui-icon-pencil"  update="dlgTest" value="Answer test"  oncomplete="dlgTest.show();" actionListener="#{userManager.answerTest}"   label="#{test.id}"/>
-                                    <p:commandButton value="Check Results"  label="#{test.id}" actionListener="#{userManager.checkResults}" action="#{userManager.redirectResults}" ajax="false"/>
+                                    <p:commandButton icon="ui-icon ui-icon-pencil"  update="dlgTest" value="Answer test" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" oncomplete="dlgTest.show();" actionListener="#{userManager.answerTest}"   label="#{test.id}"/>
+                                    <p:commandButton value="Check Results"  label="#{test.id}"  actionListener="#{userManager.checkResults}" action="#{userManager.redirectResults}" ajax="false"/>
                                 </p:column>
                                 <!--Falta arranjar o Layout-->
                                 <p:dialog id="dlgTest" header="#{userManager.selectedTest.name} Test" widgetVar="dlgTest" dynamic="true" cache="false" modal="true" height="500" width="800" draggable="false" resizable="false"  appendToBody="true" > 
@@ -80,7 +80,7 @@
                                             <p:column>
 
 
-                                                <p:commandButton value="save" actionListener="#{userManager.saveTest}" label="#{q.number}"/>
+                                                <p:commandButton value="save" actionListener="#{userManager.saveTest}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" label="#{q.number}"/>
                                                 <br/>
 
 
@@ -155,17 +155,19 @@
                                                                 <p:panelGrid columns="2" style="border-color: white">
 
                                                                     <h:form>
+                                                                        <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                                         <h:outputText value="URL Name: "/>
                                                                         <p:inputText id ="urlName" value="#{userManager.urlName}" required="true" label="Url Name" requiredMessage="A Url Name is required."  >
-                                                                            <p:ajax event="keyup"/>
+                                                                            <p:ajax event="keyup" />
                                                                         </p:inputText>
                                                                         <h:outputText  value="URL: "/>
                                                                         <p:inputText id="urlAddress" value="#{userManager.urlAdress}" required="true" label="Url Address" requiredMessage="A Url Address is required."  >
                                                                             <p:ajax event="keyup"/>
                                                                         </p:inputText>
+                                                                        </p:panelGrid>
                                                                     </h:form>
                                                                 </p:panelGrid>
-                                                                <p:commandButton value="Submit"  actionListener="#{userManager.submitURL}" label="#{q.number}" update="URL"  />
+                                                                <p:commandButton value="Submit" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.submitURL}" label="#{q.number}" update="URL"  />
 
 
 
