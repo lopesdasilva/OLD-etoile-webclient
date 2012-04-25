@@ -40,7 +40,7 @@
                     <p:accordionPanel value ="#{userManager.current_user.news}" var="news_var" style="width:800px">  
                         <p:tab title="#{news_var.title}">  
                             <h:panelGrid columns="1" cellpadding="10">
-                                <h:outputText value="#{news_var.text}" />  
+                                <h:outputText value="#{news_var.text}" escape="false" />  
                             </h:panelGrid>  
                         </p:tab> 
                     </p:accordionPanel>  
