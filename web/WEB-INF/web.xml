@@ -25,4 +25,12 @@
         <param-name>primefaces.THEME</param-name>  
         <param-value>home</param-value>  
     </context-param>
+    <filter>
+        <filter-name>Character Encoding Filter</filter-name>
+        <filter-class>filter.CharacterEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Character Encoding Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
 </web-app>
