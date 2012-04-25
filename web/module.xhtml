@@ -38,19 +38,17 @@
 
 
                     <p:fieldset legend="#{userManager.selectedModule.name}" >
-                        <p:accordionPanel value="#{userManager.selectedModule.tests}" var="test" style="width:500px;height:300px;" >
-                            <p:tab title="#{test.name}" style="max-width: 300px" >  
+                        <p:accordionPanel value="#{userManager.selectedModule.tests}" var="test" style="width:800px" >
+                            <p:tab title="#{test.name}" >  
                                 <h:panelGrid id="pgrid" columns="2" cellpadding="10">
                                     <h:outputText value="Name:" style="font-weight: bold"/>
                                     <h:outputText value="#{test.name}"/>
                                     <h:outputText value="Description:" style="font-weight: bold"/>
-                                    <h:outputText value="#{test.description}"/>
+                                    <h:outputText value="#{test.description}" escape="false"/>
                                     <h:outputText value="Begin date:" style="font-weight: bold"/>
                                     <h:outputText value="#{test.beginDate.toString()}"/>
                                     <h:outputText value="End date:" style="font-weight: bold"/>
                                     <h:outputText value="#{test.endDate.toString()}"/>
-
-                                    <a href="http://#{test.url}" target="_blank">Extra Content</a>
                                 </h:panelGrid>
 
                                 <p:column>

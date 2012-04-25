@@ -423,7 +423,7 @@ public class userManager implements Serializable {
         for (Test t : selectedModule.getTests()) {
             if (t.getId() == Integer.parseInt(cb.getLabel())) {
                 try {
-                    this.selectesavedTest = t;
+                    this.selectedTest = t;
                     selectedTest.setQuestions(new LinkedList<Question>());
                     manager.userService().updateQuestions(selectedTest);
                 } catch (SQLException ex) {
