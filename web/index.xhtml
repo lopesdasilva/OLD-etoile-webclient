@@ -14,14 +14,14 @@
                     <center>
                         <h:outputText value="Loading, please wait..."/>
                         <br/>
-                        <p:graphicImage value="resources/images/ajaxloadingbar.gif" />
+                        <p:graphicImage value="#{resource['images/ajaxloadingbar.gif']}" />
                     </center>
                 </p:dialog> 
                 <h:form>
                     <p:column>
 
                         <h:panelGrid columns="2" id="login" style="vertical-align:top;" >
-                            <img src="./resources/images/etoile-logo-small-student.png" width="450"/>
+                            <img src="#{resource['images/etoile-logo-small-student.png']}" width="450"/>
                             <h:panelGrid columns="2" >
                                 <h:outputLabel value="Username: "/>
                                 <p:inputText id="username" size="25" label="username"  value="#{userManager.username}"/>
@@ -36,8 +36,9 @@
                                 </h:panelGrid>
                             </h:panelGrid>
                         </h:panelGrid>
+                        <br/>
                         <center>
-                            <h:outputText style="color: #AFAFAF" value="étoile does not support Internet Explorer, please use a different browser"/>
+                            <h:outputText style="color: #AFAFAF" value="The Étoile platform uses some new features not yet supported by Internet Explorer. Please use only the browsers Safary, Firefox or Chrome."/>
                         </center>
                     </p:column>
                     <p:growl id="growl"  showDetail="true" autoUpdate="true"/>  

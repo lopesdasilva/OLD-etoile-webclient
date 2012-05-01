@@ -60,15 +60,9 @@
                         </p:dataTable>
                         <br></br>
                         <h:commandLink value="Export to PDF">
-                            <p:graphicImage value="resources/images/pdf.png" />  
-
-                            <p:dataExporter type="pdf" target="questions" fileName="#{userManager.username}_#{userManager.selectedTest.name}(#{userManager.todayDate})"/>  
-
+                            <p:graphicImage value="#{resource['images/pdf.png']}" />
+                            <p:dataExporter type="pdf" target="questions" fileName="#{userManager.username}_#{userManager.selectedTest.name}(#{userManager.todayDate})"/>
                         </h:commandLink>
-                        <!--                    <h:commandLink>  
-                                                <p:graphicImage value="resources/images/excel.png" />  
-                                                <p:dataExporter type="xls" target="questions" fileName="#{userManager.username}_#{userManager.selectedTest.name}(#{userManager.todayDate})" pageOnly="true"/> 
-                                            </h:commandLink>  -->
                     </h:form>
                 </p:fieldset>
             </ui:define>

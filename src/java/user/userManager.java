@@ -13,18 +13,21 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import menu.MenuBean;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
+import org.primefaces.component.tabview.Tab;
 import org.primefaces.event.TabChangeEvent;
 import sha1.sha1;
 
@@ -49,6 +52,7 @@ public class userManager implements Serializable {
     private LinkedList<String> respostas = new LinkedList<String>();
     private String todayDate = "HOJE";
     private Test selectesavedTest;
+    private int tabIndexToSave = 0;
 
     public Test getSelectesavedTest() {
         return selectesavedTest;
@@ -307,14 +311,13 @@ public class userManager implements Serializable {
 
     }
 
-    public void saveTest(ActionEvent actionEvent) {
-//            selectedDiscipline.id;
-//            selectedModule.id;
-//            selectedTest.id;
-        Object obj = actionEvent.getSource();
-        CommandButton cb = (CommandButton) obj;
+    public void saveTest() {
 
-        int qNumber = Integer.parseInt(cb.getLabel());
+        System.out.println("DEBUG: Saving Current Answer");
+        System.out.println("DEBUG: Question Number: "+tabIndexToSave+1);
+
+
+        int qNumber = tabIndexToSave+1;
 
 
 
@@ -403,17 +406,73 @@ public class userManager implements Serializable {
 
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "New URL submitted"));
-        urlName="";
-        urlAdress="";
+        urlName = "";
+        urlAdress = "";
         return 1;
     }
-    //NOT WORKING
 
-    public void onTabChange(TabChangeEvent event) {
-        System.out.println("ID: " + event.getTab().getId());
-        System.out.println("Title: " + event.getTab().getTitle());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tab Changed", "Active Tab: " + event.getTab().getId()));
+    public void onTabOpen() {
+    }
 
+    public void onTabChange() {
+
+
+        int qNumber = tabIndexToSave + 1;
+        for (Question q : selectedTest.getQuestions()) {
+
+            if (q.getNumber() == qNumber) {
+                try {
+                    switch (q.getQuestionType()) {
+                        case MULTIPLE_CHOICE:
+                            System.out.println("DEBUG: Question: " + q.getText());
+                            System.out.println("DEBUG: Question: " + q.getText());
+                            System.out.println("DEBUG: Selected Answers:");
+                            for (String s : q.getUserAnswers()) {
+                                System.out.println("DEBUG: Answer: " + s);
+                            }
+                            manager.userService().updateMultipleChoiceAnswer(q.getId(), q.getUserAnswers());
+                            break;
+                        case ONE_CHOICE:
+                            manager.userService().updateOneChoiceAnswer(q.getId(), q.getUserAnswer());
+                            System.out.println("DEBUG:  Question: " + q.getText());
+                            System.out.println("Question: " + q.getText());
+                            System.out.println("Answer: " + q.getUserAnswer());
+                            break;
+                        case OPEN:
+                            manager.userService().updateOpenAnswer(q.getId(), q.getUserAnswer());
+                            System.out.println("DEBUG:  Question: " + q.getText());
+                            System.out.println("Question: " + q.getText());
+                            System.out.println("Answer: " + q.getUserAnswer());
+                            break;
+                    }
+
+
+                } catch (SQLException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fail", "Answer not saved."));
+                }
+            }
+
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Saved Answer"));
+
+
+
+        tabIndexToSave = getIndexFromCurrentTab();
+    }
+
+    //este método é martelo..
+    private int getIndexFromCurrentTab() {
+        ExternalContext external = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, String> requestMap = external.getRequestParameterMap();
+
+        //procura entre todos os parâmetros o tabIndex da tab corrente  
+        for (String code : requestMap.keySet()) {
+            if (code.contains("tabindex")) {
+                return Integer.parseInt(requestMap.get(code));
+            }
+        }
+
+        return -1;
     }
 
     public void checkResults(ActionEvent actionEvent) {
