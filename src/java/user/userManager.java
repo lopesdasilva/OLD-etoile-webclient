@@ -304,7 +304,7 @@ public class userManager implements Serializable {
         }
         System.out.println("DEBUG: SELECTED TEST: " + selectedTest.name + " ID: " + selectedTest.getId());
         System.out.println("DEBUG: SELECTED TEST AUTHOR: " + selectedTest.author);
-
+        System.out.println("DEBUG: SELECTED TEST SHOW URLS: "+selectedTest.showURLS);
 
 
 
