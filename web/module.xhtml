@@ -77,7 +77,7 @@
 
                                     <p:tabView value="#{userManager.selectedTest.questions}" var="q" dynamic="true" cache="false" style="width: 770px" >
                                         <p:ajax event="tabChange" listener="#{userManager.onTabChange}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />  
-                                       
+
                                         <p:tab  title="#{q.number}">
 
                                             <p:column>
@@ -127,14 +127,16 @@
                                                                         <a href="http://#{url.url}" target="_blank">#{url.name}</a>
                                                                         <p:spacer width="10"/>
 
-                                                                        <h:form>
-                                                                            <p:inplace label="Rate this link" editor="true" >
-                                                                                <h:form>
-                                                                                    <p:rating value="#{url.votes}"></p:rating>
-                                                                                </h:form>
-                                                                            </p:inplace >
-                                                                        </h:form>
 
+                                                                        <h:form>
+                                                                            
+                                                                            <p:rating value="#{url.average}" >  
+                                                                                <p:ajax event="rate" listener="#{userManager.onrate}"/>  
+
+                                                                            </p:rating>
+                                                                            <br/>
+                                                                        </h:form>
+                                                                        <p:commandButton value="Save Vote" actionListener="#{userManager.saveRating}" label="#{url.id}"/>
 
                                                                     </p:column>
                                                                 </p:dataList>

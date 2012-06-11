@@ -29,6 +29,7 @@ import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.event.RateEvent;
 import sha1.sha1;
 
 @ManagedBean(name = "userManager")
@@ -304,7 +305,7 @@ public class userManager implements Serializable {
         }
         System.out.println("DEBUG: SELECTED TEST: " + selectedTest.name + " ID: " + selectedTest.getId());
         System.out.println("DEBUG: SELECTED TEST AUTHOR: " + selectedTest.author);
-        System.out.println("DEBUG: SELECTED TEST SHOW URLS: "+selectedTest.showURLS);
+        System.out.println("DEBUG: SELECTED TEST SHOW URLS: " + selectedTest.showURLS);
 
 
 
@@ -314,10 +315,10 @@ public class userManager implements Serializable {
     public void saveTest() {
 
         System.out.println("DEBUG: Saving Current Answer");
-        System.out.println("DEBUG: Question Number: "+tabIndexToSave+1);
+        System.out.println("DEBUG: Question Number: " + tabIndexToSave + 1);
 
 
-        int qNumber = tabIndexToSave+1;
+        int qNumber = tabIndexToSave + 1;
 
 
 
@@ -505,5 +506,38 @@ public class userManager implements Serializable {
 
     public void add() {
         respostas.add("UM");
+    }
+
+    public void onrate(RateEvent rateEvent) {
+        System.out.println("DEBUG: RATING URL Vote:" + ((Integer) rateEvent.getRating()).intValue());
+    }
+
+    public void saveRating(ActionEvent actionEvent) {
+        Object obj = actionEvent.getSource();
+        CommandButton cb = (CommandButton) obj;
+
+        int urlID = Integer.parseInt(cb.getLabel());
+        System.out.println("DEBUG URL ID: " + urlID);
+
+        System.out.println("DEBUG QUESTION index: " + tabIndexToSave);
+
+        LinkedList<URL> urls =
+                selectedTest.questions.get(tabIndexToSave).getURLS();
+        for (URL url : urls) {
+            System.out.println("DEBUG URL Vote: " + url.getAux_vote());
+            if (url.getId() == urlID) {
+                try {
+                    manager.userService().setVotes(url, url.getAux_vote());
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rating saved"));
+                } catch (SQLException ex) {
+                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed", "Error saving your vote"));
+               
+                }
+
+            }
+
+        }
+
     }
 }
