@@ -128,15 +128,16 @@
                                                                         <p:spacer width="10"/>
 
 
-                                                                        <h:form>
+                                                                        <h:form id="formrating">
                                                                             
-                                                                            <p:rating value="#{url.average}" >  
+                                                                            <p:rating id="rating" value="#{url.average}" >  
                                                                                 <p:ajax event="rate" listener="#{userManager.onrate}"/>  
 
                                                                             </p:rating>
                                                                             <br/>
+                                                                           
                                                                         </h:form>
-                                                                        <p:commandButton value="Save Vote" actionListener="#{userManager.saveRating}" label="#{url.id}"/>
+                                                                         <p:commandButton value="Save Vote" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="formrating" />
 
                                                                     </p:column>
                                                                 </p:dataList>
