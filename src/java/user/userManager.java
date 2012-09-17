@@ -343,7 +343,8 @@ public class userManager implements Serializable {
                             System.out.println("Answer: " + q.getUserAnswer());
                             break;
                         case OPEN:
-                            manager.userService().updateOpenAnswer(q.getId(), q.getUserAnswer());
+                            String userAnswer=q.getUserAnswer().replace("'", "''");
+                            manager.userService().updateOpenAnswer(q.getId(), userAnswer);
                             System.out.println("DEBUG:  Question: " + q.getText());
                             System.out.println("Question: " + q.getText());
                             System.out.println("Answer: " + q.getUserAnswer());
@@ -509,7 +510,7 @@ public class userManager implements Serializable {
     }
 
     public void onrate(RateEvent rateEvent) {
-        System.out.println("DEBUG: RATING URL Vote:" + ((Integer) rateEvent.getRating()).intValue());
+        //System.out.println("DEBUG: RATING URL Vote:" + ((Integer) rateEvent.getRating()).intValue());
     }
 
     public void saveRating(ActionEvent actionEvent) {
