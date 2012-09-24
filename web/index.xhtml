@@ -28,11 +28,11 @@
                                 <h:outputLabel value="Password: "/>
                                 <p:password value="#{userManager.password}" label="password"  size="25" minLength="6" id="password" feedback="false" />
                                 <br></br>
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="4" >
                                     <p:commandButton  value="Login"  onclick="statusDialog.show();" ajax="false" action="#{userManager.checkValidUser}"/>
                                     <p:commandButton value="Register" onclick="dlgRegister.show();"/>
                                     <p:commandButton onclick="dlgHelp.show();" icon="ui-icon ui-icon-help"/>
-
+                                    <p:commandLink value="forgot?" onclick="dlgForgot.show();"/>
                                 </h:panelGrid>
                             </h:panelGrid>
                         </h:panelGrid>
@@ -94,6 +94,27 @@
 
                     </h:form>  
                 </p:dialog>  
+                <p:dialog id="forgotDialog" header="Forgot" widgetVar="dlgForgot" resizable="false" dynamic="true" draggable="false" minWidth="400" minHeight="250" position="center">  
+                    <h:form>
+                        <h:outputText value="Please fill in the next form:"/>
+                        <p:outputPanel layout="block" style="width:400px;border:1px solid grey;">
+                            <h:panelGrid columns="2" >
+                                <h:outputLabel value="Username: *"/>
+                                <p:inputText id="reg_firstname" value="#{userRegister.forgotUserName}" required="true"  label="Username" requiredMessage="Username required." />
+                                <h:outputLabel value="Email: *"/>
+                                <p:inputText id="reg_lastname" value="#{userRegister.forgotEmail}" required="true"  label="Email" requiredMessage="Email required." />
+                              <center> 
+                            <p:commandButton value="Reset Password" title="Reset Password" onclick="statusDialog.show();" ajax="false" action="#{userRegister.resetPassword}"/>
+                        </center>
+                            </h:panelGrid>
+                          
+                        </p:outputPanel>
+                        
+
+                    </h:form>  
+                </p:dialog>  
+                
+                
                 <script type="text/javascript">  
                     function handleLoginRequest(xhr, status, args) {  
                         if(!args.registerDialog) {  

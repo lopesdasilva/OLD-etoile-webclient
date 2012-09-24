@@ -17,11 +17,12 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
+import services.UserService;
 import sha1.sha1;
 
 @ManagedBean(name = "userRegister")
 @SessionScoped
-public class userRegister implements Serializable{
+public class userRegister implements Serializable {
 
     @ManagedProperty(value = "#{sha1}")
     private sha1 sha1;
@@ -30,6 +31,24 @@ public class userRegister implements Serializable{
     private String email;
     private String firstName;
     private String lastName;
+    private String forgotUserName;
+    private String forgotEmail;
+
+    public String getForgotEmail() {
+        return forgotEmail;
+    }
+
+    public String getForgotUserName() {
+        return forgotUserName;
+    }
+
+    public void setForgotEmail(String forgotEmail) {
+        this.forgotEmail = forgotEmail;
+    }
+
+    public void setForgotUserName(String forgotUserName) {
+        this.forgotUserName = forgotUserName;
+    }
 
     public sha1 getSha1() {
         return sha1;
@@ -81,9 +100,9 @@ public class userRegister implements Serializable{
 
     public String createUser() {
 
-        if (!email.contains("@") && !email.contains(".")) { 
+        if (!email.contains("@") && !email.contains(".")) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Email"));
-       
+
             return "fail";
         }
         RequestContext context = RequestContext.getCurrentInstance();
@@ -120,5 +139,36 @@ public class userRegister implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "User creation failed."));
         return "fail";
 
+    }
+
+    public String resetPassword() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        try {
+            System.out.println("User: " + forgotUserName + " with email: " + forgotEmail + " has requested a new password");
+            ServiceManager manager = new ServiceManager();
+
+            manager.userService().resetPassword(forgotEmail);
+
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Password reset successfully"));
+
+            context.addCallbackParam("forgotDialog", true);
+            return "success";
+
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(userRegister.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        context.addCallbackParam("forgotDialog", false);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Password reset failed"));
+        return "fail";
     }
 }
