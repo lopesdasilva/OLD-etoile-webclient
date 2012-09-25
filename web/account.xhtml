@@ -28,36 +28,47 @@
 
 
             <ui:define name="content">
+                 <p:dialog modal="true" widgetVar="statusDialog" header="Please wait..."   
+                          resizable="false" draggable="false" closable="false" showHeader="false">  
+                    <center>
+                        <h:outputText value="Loading, please wait..."/>
+                        <br/>
+                        <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />
+                    </center>
+                </p:dialog> 
                 <h:form>
+                    
+                    <p:growl id="growl" showDetail="true" sticky="false" autoUpdate="true" />
+
                     <p:fieldset legend="Account">
-                        <p:fieldset legend="Change User Informations">
+                        <p:fieldset legend="Change User Informations" >
                             <p:panelGrid columns="2" style="border-color: inactiveborder">
                                 <p:panelGrid columns="2" style="border-color: inactiveborder">
                                     <h:outputText value="First Name: "/>
-                                    <p:inputText value="#{userManager.current_user.firstname}"/>
+                                    <p:inputText value="#{userManager.current_user.firstname}" disabled="true"/>
                                     <h:outputText value="Last Name: "/>
-                                    <p:inputText value="#{userManager.current_user.lastname}"/>
+                                    <p:inputText value="#{userManager.current_user.lastname}" disabled="true"/>
                                     <h:outputText value="Email: "/>
-                                    <p:inputText value="#{userManager.current_user.email}"/>
+                                    <p:inputText value="#{userManager.current_user.email}" disabled="true"/>
                                 </p:panelGrid>
-                                <p:photoCam ></p:photoCam>
+<!--                                <p:photoCam ></p:photoCam>-->
                             </p:panelGrid>
-                            <p:commandButton value="Save" style="position: relative; left: 580px"/>
+                            <p:commandButton value="Save" disabled="true" onclick="statusDialog.show();" oncomplete="statusDialog.hide();"/>
                         </p:fieldset>
+                        <br></br>
                         <p:fieldset legend="Change Password">
                             
-                            <p:panelGrid columns="2" style="border-color: inactiveborder">
-                                <h:outputText value="Old Password: "/>
-                                <p:password value="" />
+                            <p:panelGrid id="password" columns="2" style="border-color: inactiveborder">
+     
                                 <h:outputText value="New Password: "/>
-                                <p:password value=""/>
+                                <p:password id="pwd1" value="#{userManager.newPassword}" match="pwd2" label="New password" required="true"/>
                                 <h:outputText value="Retype Password: "/>
-                                <p:password value=""/>
+                                <p:password id="pwd2" value="#{userManager.newPassswordRetype}" label="Retype password" required="true"/>
                                 </p:panelGrid>
-                            <p:commandButton value="Save new password" style="position: relative; left: 490px"/>
+                            <p:commandButton value="Save new password" update="password" onclick="statusDialog.show();" actionListener="#{userManager.changePassword}" oncomplete="statusDialog.hide();"/>
                         </p:fieldset>
                         
-                    </p:fieldset>
+                    </p:fieldset>  
                 </h:form>
             </ui:define>
 

@@ -54,7 +54,25 @@ public class userManager implements Serializable {
     private String todayDate = "HOJE";
     private Test selectesavedTest;
     private int tabIndexToSave = 0;
+    private String newPassword;
+    private String newPassswordRetype;
 
+    public String getNewPassswordRetype() {
+        return newPassswordRetype;
+    }
+
+    public void setNewPassswordRetype(String newPassswordRetype) {
+        this.newPassswordRetype = newPassswordRetype;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+    
     public Test getSelectesavedTest() {
         return selectesavedTest;
     }
@@ -541,4 +559,23 @@ public class userManager implements Serializable {
         }
 
     }
+
+    public void changePassword(){
+        try {
+            System.out.println("DEBUG: USER "+username+" is trying to change is password");
+            manager.userService().changePassword(newPassword);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Password Changed"));
+               
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed", "Error changing your password"));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed", "Error changing your password"));
+
+        }
+                       
+    }
+
 }

@@ -99,12 +99,10 @@
                         <h:outputText value="Please fill in the next form:"/>
                         <p:outputPanel layout="block" style="width:400px;border:1px solid grey;">
                             <h:panelGrid columns="2" >
-                                <h:outputLabel value="Username: *"/>
-                                <p:inputText id="reg_firstname" value="#{userRegister.forgotUserName}" required="true"  label="Username" requiredMessage="Username required." />
                                 <h:outputLabel value="Email: *"/>
                                 <p:inputText id="reg_lastname" value="#{userRegister.forgotEmail}" required="true"  label="Email" requiredMessage="Email required." />
                               <center> 
-                            <p:commandButton value="Reset Password" title="Reset Password" onclick="statusDialog.show();" ajax="false" action="#{userRegister.resetPassword}"/>
+                            <p:commandButton value="Reset Password" title="Reset Password" onclick="statusDialog.show();dlgForgot.hide();" oncomplete="statusDialog.hide();" action="#{userRegister.resetPassword}"/>
                         </center>
                             </h:panelGrid>
                           

@@ -22,7 +22,7 @@
                     </h:panelGrid>
 
                     <h:panelGrid columns="3" styleClass="userbar">
-                        <p:commandLink value="Account" ajax="false"  disabled="true" action="#{userManager.redirectAccount()}" />
+                        <p:commandLink value="Account" ajax="false"  disabled="false" action="#{userManager.redirectAccount()}" />
                         <h:outputLabel value="|"/>
                         <p:commandLink value="Logoff" ajax="false" action="#{userManager.logOff()}"/>
                     </h:panelGrid>
