@@ -89,7 +89,7 @@
                             </h:panelGrid>
                         </p:outputPanel>
                         <center> 
-                            <p:commandButton value="Submit"  oncomplete="handleLoginRequest(xhr, status, args)" update="matchGrid" action="#{userRegister.createUser}"/>
+                            <p:commandButton value="Submit" onclick="statusDialog.show();"  oncomplete="statusDialog.hide();handleLoginRequest(xhr, status, args);" update="matchGrid" action="#{userRegister.createUser}"/>
                         </center>
 
                     </h:form>  

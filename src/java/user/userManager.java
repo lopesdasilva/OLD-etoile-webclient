@@ -399,6 +399,15 @@ public class userManager implements Serializable {
         System.out.println("DEBUG: Question Number: " + qNumber);
         System.out.println("DEBUG: URL Name: " + urlName);
         System.out.println("DEBUG: URL Address: " + urlAdress);
+        
+        //check if url contains http://
+        
+        if (urlAdress.contains("http://")){
+             System.out.println("DEBUG: URL Address: (removing http) " + urlAdress);
+            urlAdress= urlAdress.replaceAll("http://","");
+         System.out.println("DEBUG: URL Address: (done)" + urlAdress);
+        }
+        
         Question selectedQuestion = null;
         for (Question q : selectedTest.getQuestions()) {
 
@@ -550,9 +559,10 @@ public class userManager implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rating saved"));
                 } catch (SQLException ex) {
                     Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed", "Error saving your vote"));
-               
+                } catch (Exception ex) {
+                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
 
             }
 

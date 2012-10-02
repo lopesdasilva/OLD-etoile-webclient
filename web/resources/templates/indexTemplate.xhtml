@@ -13,6 +13,14 @@
     </h:head>
 
     <h:body>
+        <p:idleMonitor timeout="1500000">
+        <p:ajax
+            event="idle"
+            listener="#{logoutBean.idleListener}"/>
+        <p:ajax
+            event="active"
+            listener="#{logoutBean.activeListener2}" />
+    </p:idleMonitor>
 
 
         <center>

@@ -13,6 +13,28 @@
     </h:head>
 
     <h:body>
+        <p:idleMonitor timeout="1500000">
+            <p:ajax
+                event="idle"
+                listener="#{logoutBean.idleListener}"
+                oncomplete="idleDialog.show()" />
+            <p:ajax
+                event="active"
+                listener="#{logoutBean.activeListener}" />
+        </p:idleMonitor>
+        <p:dialog
+            header="Session Exceeded Idle Limit"
+            widgetVar="idleDialog"
+            modal="true"
+            fixedCenter="true"
+            closable="false"
+            draggable="false"
+            resizable="false"
+            appendToBody="true"
+            height="50"
+            width="300">
+            <h:outputText value="Session Terminated. Please login again." />
+        </p:dialog>
         <div id="toptop" class="toptop" >
             <ui:insert name="toptop">toptop</ui:insert>
         </div>
