@@ -150,7 +150,7 @@ public class userRegister implements Serializable {
             manager.userService().resetPassword(forgotEmail);
 
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Password reset successfully"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Password reset successfully. Please check your Email"));
 
             context.addCallbackParam("forgotDialog", true);
             return "success";

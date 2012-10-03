@@ -7,6 +7,7 @@ package user;
 import etoile.javaapi.*;
 import etoile.javaapi.question.Question;
 import etoile.javaapi.question.URL;
+import exceptions.VoteException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -434,6 +435,11 @@ public class userManager implements Serializable {
 
 
         }
+        
+        for(URL u: selectedTest.questions.get(tabIndexToSave).getURLS()){
+               
+               System.out.println("URL Name:"+u.getName()+" Votes:"+u.getNVotes()+" rating:"+u.getAverage());
+           }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "New URL submitted"));
         urlName = "";
         urlAdress = "";
@@ -557,14 +563,19 @@ public class userManager implements Serializable {
                 try {
                     manager.userService().setVotes(url, url.getAux_vote());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rating saved"));
+                } catch (VoteException ex) {
+                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
+                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed", "You already voted on this url"));
+
                 } catch (SQLException ex) {
                     Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
-                    Logger.getLogger(userManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-
             }
+            
+           for(URL u: selectedTest.questions.get(tabIndexToSave).getURLS()){
+               
+               System.out.println("URL Name:"+u.getName()+" Votes:"+u.getNVotes()+" rating:"+u.getAverage());
+           }
 
         }
 

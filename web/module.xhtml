@@ -124,7 +124,10 @@
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
                                                                 <p:dataList id="urls" value="#{q.URLS}" var="url" style="border-color: inactiveborder">
                                                                     <p:column>
-                                                                        <a href="http://#{url.url}" target="_blank">#{url.name}</a>
+                                                                        <a href="http://#{url.url}" target="_blank">#{url.name}</a> 
+                                                                        <h:outputText value=" ("/>
+                                                                         <h:outputText id="votes" value="#{url.NVotes}"/>
+                                                                         <h:outputText value=" votes)"/>
                                                                         <p:spacer width="10"/>
 
 
@@ -134,10 +137,11 @@
                                                                                 <p:ajax event="rate" listener="#{userManager.onrate}"/>  
 
                                                                             </p:rating>
-                                                                            <br/>
+                                                                           
+                                                                           
                                                                            
                                                                         </h:form>
-                                                                         <p:commandButton value="Save Vote" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="formrating" />
+                                                                         <p:commandButton value="Save Vote" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votes formrating" />
 
                                                                     </p:column>
                                                                 </p:dataList>
@@ -164,7 +168,7 @@
                                                                         </p:panelGrid>
                                                                     </h:form>
                                                                 </p:panelGrid>
-                                                                <p:commandButton value="Submit" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.submitURL}" label="#{q.number}" update="URL"  />
+                                                                <p:commandButton value="Submit" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.submitURL}" label="#{q.number}" update="urls"  />
 
 
 
