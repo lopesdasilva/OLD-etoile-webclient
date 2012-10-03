@@ -122,30 +122,59 @@
                                                         <p:panelGrid columns="2" style="border-color: inactiveborder">
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
-                                                                <p:dataList id="urls" value="#{q.URLS}" var="url" style="border-color: inactiveborder">
-                                                                    <p:column>
-                                                                        <a href="http://#{url.url}" target="_blank">#{url.name}</a> 
-                                                                        <h:outputText value=" ("/>
-                                                                         <h:outputText id="votes" value="#{url.NVotes}"/>
-                                                                         <h:outputText value=" votes)"/>
-                                                                        <p:spacer width="10"/>
+                                                                <div class="datalist-noborder">
+                                                                    <p:dataList id="urls" value="#{q.URLS}" var="url" >
+                                                                        <p:column>
+                                                                            <a href="http://#{url.url}" target="_blank">#{url.name}</a> 
+                                                                            <h:outputText value=" ("/>
+                                                                            <h:outputText id="votes" value="#{url.NVotes}"/>
+                                                                            <h:outputText value=" votes)"/>
+                                                                            <p:spacer width="10"/>
 
 
-                                                                        <h:form id="formrating">
-                                                                            
-                                                                            <p:rating id="rating" value="#{url.average}" >  
-                                                                                <p:ajax event="rate" listener="#{userManager.onrate}"/>  
+                                                                            <h:form id="formrating">
 
-                                                                            </p:rating>
-                                                                           
-                                                                           
-                                                                           
-                                                                        </h:form>
-                                                                         <p:commandButton value="Save Vote" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votes formrating" />
+                                                                                <p:rating id="rating" value="#{url.average}" disabled="#{url.already_voted}"  >  
+                                                                                    <p:ajax event="rate" listener="#{userManager.onrate}"/>  
 
-                                                                    </p:column>
-                                                                </p:dataList>
+                                                                                </p:rating>
 
+
+
+                                                                            </h:form>
+                                                                            <br></br>
+                                                                            <p:commandButton id="saveVote" value="Save Vote" disabled="#{url.already_voted}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votes formrating saveVote" />
+
+                                                                        </p:column>
+                                                                    </p:dataList>
+                                                                </div>
+                                                                <p:commandButton value="Show all" onclick="allURLSDialog.show();" disabled="true"/>
+                                                                <p:dialog id="allURLSDialog" widgetVar="allURLSDialog" draggable="false" resizable="false" >
+                                                                    <p:dataList id="Allurls" value="#{q.URLS}" var="url" >
+                                                                        <p:column>
+                                                                            <a href="http://#{url.url}" target="_blank">#{url.name}</a> 
+                                                                            <h:outputText value=" ("/>
+                                                                            <h:outputText id="votes" value="#{url.NVotes}"/>
+                                                                            <h:outputText value=" votes)"/>
+                                                                            <p:spacer width="10"/>
+
+
+                                                                            <h:form id="formrating">
+
+                                                                                <p:rating id="rating" value="#{url.average}" disabled="#{url.already_voted}"  >  
+                                                                                    <p:ajax event="rate" listener="#{userManager.onrate}"/>  
+
+                                                                                </p:rating>
+
+
+
+                                                                            </h:form>
+                                                                            <br></br>
+                                                                            <p:commandButton id="saveVote" value="Save Vote" disabled="#{url.already_voted}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votes formrating saveVote" />
+
+                                                                        </p:column>
+                                                                    </p:dataList>
+                                                                </p:dialog>
                                                             </p:column>
                                                             <p:column>
 
@@ -156,7 +185,7 @@
                                                                 <p:panelGrid columns="2" style="border-color: white">
 
                                                                     <h:form>
-                                                                        <p:panelGrid columns="2" style="border-color: inactiveborder">
+                                                                        <p:panelGrid columns="2">
                                                                             <h:outputText value="URL Name: "/>
                                                                             <p:inputText id ="urlName" value="#{userManager.urlName}" required="true" label="Url Name" requiredMessage="A Url Name is required."  >
                                                                                 <p:ajax event="keyup" />
@@ -168,7 +197,7 @@
                                                                         </p:panelGrid>
                                                                     </h:form>
                                                                 </p:panelGrid>
-                                                                <p:commandButton value="Submit" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.submitURL}" label="#{q.number}" update="urls"  />
+                                                                <p:commandButton value="Add" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.submitURL}" icon="ui-icon-plus" style="margin:0" label="#{q.number}" update="urls"  />
 
 
 
@@ -194,7 +223,11 @@
 
 
                 </h:form>
-
+                <style type="text/css">
+                    .datalist-noborder .ui-widget-content {
+                        border: none;
+                    }
+                </style>
             </ui:define>
 
         </ui:composition>
