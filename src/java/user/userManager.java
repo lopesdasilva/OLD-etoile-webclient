@@ -56,7 +56,18 @@ public class userManager implements Serializable {
     private Test selectesavedTest;
     private int tabIndexToSave = 0;
     private String newPassword;
+    private forumManager forumManager;
     private String newPassswordRetype;
+
+    public user.forumManager getForumManager() {
+        return forumManager;
+    }
+
+    public void setForumManager(user.forumManager forumManager) {
+        this.forumManager = forumManager;
+    }
+    
+    
 
     public String getNewPassswordRetype() {
         return newPassswordRetype;
@@ -257,6 +268,8 @@ public class userManager implements Serializable {
 
     public String redirectDiscussionForum() {
         System.out.println("DEBUG: Redirecting to Forum");
+        forumManager=new forumManager(manager,this);
+               
         return "forum";
     }
 

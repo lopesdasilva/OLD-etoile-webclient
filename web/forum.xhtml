@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <body>
 
         <ui:composition template="./resources/templates/profileTemplate.xhtml">
@@ -13,11 +14,11 @@
             <ui:define name="toptop">
                 <h:form >
                     <h:panelGrid columns="5" styleClass="breadcrums" >
-                    <p:commandLink value="Home" ajax="false" action="#{userManager.redirectProfile()}" />
-                    <h:outputLabel value=">"/>
-                    <p:commandLink value="#{userManager.selectedDiscipline.name}" disable="true"  action="#{userManager.redirectAnnouncements()}" disabled="true" ajax="false" />
-                      <h:outputLabel value=">"/>
-                    <p:commandLink value="Discussion Forum" disabled="true"/>
+                        <p:commandLink value="Home" ajax="false" action="#{userManager.redirectProfile()}" />
+                        <h:outputLabel value=">"/>
+                        <p:commandLink value="#{userManager.selectedDiscipline.name}" disable="true"  action="#{userManager.redirectAnnouncements()}" disabled="true" ajax="false" />
+                        <h:outputLabel value=">"/>
+                        <p:commandLink value="Discussion Forum" disabled="true"/>
                     </h:panelGrid>
                     <h:panelGrid columns="3" styleClass="userbar">
                         <p:commandLink value="Account" ajax="false"  disabled="false" action="#{userManager.redirectAccount()}" />
@@ -29,22 +30,45 @@
 
 
             <ui:define name="right">
-<!--                <p:fieldset legend="Agenda">
-                    <p:panelGrid columns="2">  
-                        <h:outputLabel id="date" value="21 February, 2012" />  
-                        <h:outputLabel id="event" value="Starting of the ASSYST - Social Intelligence course" />                      
-                    </p:panelGrid>  
-                </p:fieldset>-->
+                <!--                <p:fieldset legend="Agenda">
+                                    <p:panelGrid columns="2">  
+                                        <h:outputLabel id="date" value="21 February, 2012" />  
+                                        <h:outputLabel id="event" value="Starting of the ASSYST - Social Intelligence course" />                      
+                                    </p:panelGrid>  
+                                </p:fieldset>-->
             </ui:define>
 
             <ui:define name="content">
 
+                <h:outputText  value="#{userManager.forumManager.forum.title}"/>
+                <p:accordionPanel value="#{userManager.forumManager.forum.topics}" var="topics" style="width:800px" >
+                    <p:tab title="#{topics.title}" >
 
-                <p:fieldset legend="#{userManager.selectedDiscipline.name} - Discussion Forum" style="width: 800px">
-                    Page not ready. Please return soon.
+                        <p:dataTable id="answers" var="answer" value="#{topics.answers}"  
+                                     paginator="true"  rows="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                     rowsPerPageTemplate="5,10,15">
+                            <p:column>
+                                <p:panelGrid columns="2">  
+                                    <f:facet name="header" style="margin:0">  
+                                       Posted on #{answer.date.toString()}
+                                    </f:facet>  
+                                    <p:column>
+                                    <p:graphicImage value="#{resource['images/user-icon.jpg']}" />
+                                    <br></br> 
+                                    User: #{answer.username}
+                                    </p:column>
+                                    <p:column>
+                                       
+                                    <h:outputText value="#{answer.answer}"  escape="false" />
+                                    </p:column>
+                                </p:panelGrid>  
 
 
-                </p:fieldset>
+                            </p:column>  
+                        </p:dataTable>
+                    </p:tab>
+
+                </p:accordionPanel>
 
             </ui:define>
 
