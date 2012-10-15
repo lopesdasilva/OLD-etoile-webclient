@@ -487,7 +487,8 @@ public class userManager implements Serializable {
                             System.out.println("Answer: " + q.getUserAnswer());
                             break;
                         case OPEN:
-                            manager.userService().updateOpenAnswer(q.getId(), q.getUserAnswer());
+                             String userAnswer=q.getUserAnswer().replace("'", "''");
+                            manager.userService().updateOpenAnswer(q.getId(), userAnswer);
                             System.out.println("DEBUG:  Question: " + q.getText());
                             System.out.println("Question: " + q.getText());
                             System.out.println("Answer: " + q.getUserAnswer());

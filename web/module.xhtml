@@ -123,7 +123,7 @@
                                                             <p:column>
                                                                 <h:outputText value="The following links may help you answer the question. Tick any that you found useful"/>
                                                                 <div class="datalist-noborder">
-                                                                    <p:dataList id="urls" value="#{q.URLS}" var="url" >
+                                                                    <p:dataList id="urls" value="#{q.filteredURLS}" var="url" >
                                                                         <p:column>
                                                                             <a href="http://#{url.url}" target="_blank">#{url.name}</a> 
                                                                             <h:outputText value=" ("/>
@@ -143,37 +143,35 @@
 
                                                                             </h:form>
                                                                             <br></br>
-                                                                            <p:commandButton id="saveVote" value="Save Vote" disabled="#{url.already_voted}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votes formrating saveVote" />
+                                                                            <p:commandButton id="saveVote" value="Save Vote" disabled="#{url.already_voted}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votes  formrating  saveVote" />
 
                                                                         </p:column>
                                                                     </p:dataList>
                                                                 </div>
-                                                                <p:commandButton value="Show all" onclick="allURLSDialog.show();" disabled="true"/>
-                                                                <p:dialog id="allURLSDialog" widgetVar="allURLSDialog" draggable="false" resizable="false" >
+                                                                <p:commandButton value="Show all" onclick="allURLSDialog.show();" disabled="false" />
+                                                                <p:dialog id="allURLSDialog" widgetVar="allURLSDialog" draggable="false" resizable="true"   >
                                                                     <p:dataList id="Allurls" value="#{q.URLS}" var="url" >
                                                                         <p:column>
                                                                             <a href="http://#{url.url}" target="_blank">#{url.name}</a> 
                                                                             <h:outputText value=" ("/>
-                                                                            <h:outputText id="votes" value="#{url.NVotes}"/>
+                                                                            <h:outputText id="votesAll" value="#{url.NVotes}"/>
                                                                             <h:outputText value=" votes)"/>
                                                                             <p:spacer width="10"/>
 
 
-                                                                            <h:form id="formrating">
+                                                                            <h:form id="formratingAll">
 
-                                                                                <p:rating id="rating" value="#{url.average}" disabled="#{url.already_voted}"  >  
+                                                                                <p:rating id="ratingAll" value="#{url.average}" disabled="#{url.already_voted}"  >  
                                                                                     <p:ajax event="rate" listener="#{userManager.onrate}"/>  
 
                                                                                 </p:rating>
-
-
-
                                                                             </h:form>
                                                                             <br></br>
-                                                                            <p:commandButton id="saveVote" value="Save Vote" disabled="#{url.already_voted}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votes formrating saveVote" />
+                                                                            <p:commandButton id="saveVoteAll" value="Save Vote" disabled="#{url.already_voted}" onstart="statusDialog.show();" onsuccess="statusDialog.hide();" actionListener="#{userManager.saveRating}" label="#{url.id}"  update="votesAll  formratingAll  saveVoteAll" />
 
                                                                         </p:column>
                                                                     </p:dataList>
+                                                                    
                                                                 </p:dialog>
                                                             </p:column>
                                                             <p:column>
