@@ -48,7 +48,7 @@
                     <p:growl id="growl" showDetail="true" sticky="false" autoUpdate="true" />
 
 
-                    <p:fieldset legend="#{userManager.selectedModule.name}" >
+                    <p:fieldset legend="#{userManager.selectedModule.name}" style="width: 800px">
                         <p:accordionPanel value="#{userManager.selectedModule.tests}" var="test" style="width:800px" >
                             <p:tab title="#{test.name}" >  
                                 <h:panelGrid id="pgrid" columns="2" cellpadding="10">
@@ -150,6 +150,7 @@
                                                                 </div>
                                                                 <p:commandButton value="Show all" onclick="allURLSDialog.show();" disabled="false" />
                                                                 <p:dialog id="allURLSDialog" widgetVar="allURLSDialog" draggable="false" resizable="true"   >
+                                                                    <p:scrollPanel  mode="native">
                                                                     <p:dataList id="Allurls" value="#{q.URLS}" var="url" >
                                                                         <p:column>
                                                                             <a href="http://#{url.url}" target="_blank">#{url.name}</a> 
@@ -171,6 +172,7 @@
 
                                                                         </p:column>
                                                                     </p:dataList>
+                                                                        </p:scrollPanel>  
                                                                     
                                                                 </p:dialog>
                                                             </p:column>

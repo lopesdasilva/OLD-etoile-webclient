@@ -51,52 +51,53 @@
                 <h:form>
                     <p:growl id="growl" showDetail="true" sticky="false" autoUpdate="true" />
 
-                    <p:fieldset legend="#{userManager.selectedModule.name} Forum"  style="width: 800px">
+                    <p:fieldset legend="#{userManager.forumManager.selectedTopic.title} Forum" style="width: 800px" >
                         <h:form>
-                        <p:commandButton value="Add new topic" icon="ui-icon-plus" onclick="dlgNewTopic.show();" />
+                            <p:commandButton value="Reply" icon="ui-icon-plus" onclick="dlgNewReply.show();" />
                         </h:form>
-                        <p:dataTable id="topics" var="topic" value="#{userManager.forumManager.forum.topics}" rowKey="#{topic.id}"  
-                                     selection="#{userManager.forumManager.selectedTopic}" selectionMode="single">
+                        <p:dataTable id="answers" var="answer" value="#{userManager.forumManager.selectedTopic.answers}"  
+                                     paginator="true"  rows="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                     rowsPerPageTemplate="5,10,15">
+                            <p:column>
+                                <p:spacer rendered="true">
+                                    <p:panelGrid columns="2">  
+                                        <f:facet name="header" style="margin:0">  
+                                            Posted on #{answer.date.toString()}
+                                        </f:facet>  
+                                        <p:column>
+                                            <p:graphicImage value="#{resource['images/user-icon.jpg']}" />
+                                            <br></br> 
+                                            User: #{answer.username}
+                                        </p:column>
+                                        <p:column>
 
-                            <p:ajax event="rowSelect" listener="#{userManager.forumManager.onRowSelect}" />  
-                            <p:ajax event="rowUnselect" listener="#{userManager.forumManager.onRowUnselect}" />  
+                                            <h:outputText value="#{answer.answer}"  escape="false" />
+                                        </p:column>
+                                    </p:panelGrid>  
+                                </p:spacer>
 
-                            <p:column headerText="Author">  
-                                #{topic.username}  
-                            </p:column>  
 
-                            <p:column headerText="Topic">  
-                                #{topic.title}  
-                            </p:column>  
+                            </p:column> 
 
-                            <p:column headerText="Created" >  
-                                #{topic.date.toString()}  
-                            </p:column>  
-
-                            <p:column headerText="Number of answers">  
-                                #{topic.n_answers}  
-                            </p:column>  
                         </p:dataTable>
+                        <h:form>
+                            <p:commandButton value="Reply" icon="ui-icon-plus" onclick="dlgNewReply.show();" />
+                        </h:form>
+                        <p:dialog id="newReply" header="Add new reply" widgetVar="dlgNewReply" resizable="false" position="center">  
 
-                   
-                    <p:dialog id="newTopicDialog" header="Add new topic" widgetVar="dlgNewTopic" resizable="false" position="center">  
-                       
-                        
-                                <p:panelGrid columns="2" style="width: 750px" >
-                                    <h:outputText value="Topic title:"/>
-                                    <p:inputText value="#{userManager.forumManager.newTopicTitle}"/>
-                                </p:panelGrid>
-                                <p:editor value="#{userManager.forumManager.newTopicText}" width="800"/>
+
+                            <p:editor value="#{userManager.forumManager.newReplyText}" width="800"/>
 
                             <!--</p:outputPanel>-->
                             <center> 
-                                <p:commandButton value="Submit"  actionListener="#{userManager.forumManager.addNewTopic}" update="topics" onclick="statusDialog.show();" onsuccess="statusDialog.hide();dlgNewTopic.hide();"/>
-                                <p:commandButton value="Cancel" onclick="dlgNewTopic.hide();"/>
+                                <p:commandButton id="reply" value="Reply" update="answers" actionListener="#{userManager.forumManager.addNewReply}"  onstart="statusDialog.show();" onsuccess="statusDialog.hide();dlgNewReply.hide();"/>
+                                <p:commandButton value="Cancel" onclick="dlgNewReply.hide();"/>
                             </center>
 
-                          
-                    </p:dialog>  
-                         </p:fieldset>
+
+                        </p:dialog>
+                    </p:fieldset>
+
                 </h:form>
             </ui:define>
 
